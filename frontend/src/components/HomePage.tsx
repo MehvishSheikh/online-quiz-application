@@ -29,7 +29,7 @@ export const HomePage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background to-secondary/30 text-foreground p-6">
+    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-indigo-100 dark:from-background dark:to-secondary/30 text-foreground p-6">
       <div className="max-w-6xl mx-auto space-y-10">
         {/* Hero */}
         <div className="text-center space-y-3">
@@ -37,7 +37,7 @@ export const HomePage = () => {
             <Sparkles className="w-4 h-4 text-primary" />
             <span className="text-xs uppercase tracking-wider">Introducing</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-extrabold">QuizNova</h1>
+          <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-purple-700 to-indigo-800 bg-clip-text text-transparent">QuizNova</h1>
           <p className="text-muted-foreground max-w-2xl mx-auto">Master JavaScript, TypeScript, React, and Next with timed, scored assessments and beautiful reviews.</p>
         </div>
 
@@ -51,7 +51,7 @@ export const HomePage = () => {
               <input className="border rounded px-4 py-3" placeholder="Email address" value={email} onChange={(e)=>setEmail(e.target.value)} />
             </div>
             {error && <p className="text-destructive text-sm mb-3">{error}</p>}
-            <Button className="w-full" onClick={proceed}>Continue</Button>
+            <Button className="w-full bg-gradient-to-r from-purple-600 to-indigo-700 text-white" onClick={proceed}>Continue</Button>
           </div>
           <div className="bg-card border rounded-xl p-5">
             <h3 className="font-semibold mb-2">2. Pick your quiz</h3>
