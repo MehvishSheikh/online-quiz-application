@@ -30,5 +30,17 @@ export const quizApi = {
     if (quizId) params.append('quizId', String(quizId));
     const response = await axios.get(`${API_BASE_URL}/quiz/attempts?${params.toString()}`);
     return response.data.attempts;
+  },
+
+  // List quizzes (optionally by category)
+  listQuizzes: async (
+    category?: string,
+    level?: string
+  ): Promise<{ id: number; title: string; description: string; category: string | null; level: string | null }[]> => {
+    const params = new URLSearchParams();
+    if (category) params.append('category', category);
+    if (level) params.append('level', level);
+    const response = await axios.get(`${API_BASE_URL}/quizzes${params.toString() ? `?${params.toString()}` : ''}`);
+    return response.data.quizzes;
   }
 };

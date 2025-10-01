@@ -5,10 +5,10 @@ import { db } from '../config/db';
  */
 const seedData = () => {
   db.serialize(() => {
-    // Insert a quiz
+    // Insert multiple quizzes (basic/advanced per category)
     db.run(
-      `INSERT INTO quizzes (title, description) VALUES (?, ?)`,
-      ['JavaScript Basics', 'Test your knowledge of JavaScript fundamentals'],
+      `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
+      ['JavaScript Basics', 'Test your knowledge of JavaScript fundamentals', 'javascript', 'basic'],
       function (err) {
         if (err) {
           console.error('Error inserting quiz:', err);
@@ -18,7 +18,7 @@ const seedData = () => {
         const quizId = this.lastID;
         console.log(`Quiz created with ID: ${quizId}`);
 
-        // Insert questions
+        // Insert questions for JS (basic)
         const questions = [
           {
             text: 'What is the output of: typeof null?',
@@ -60,6 +60,8 @@ const seedData = () => {
             d: 'A way to end a loop',
             correct: 'B',
           },
+          { text: 'Which array method returns a new array with elements that pass a test?', a: 'map', b: 'filter', c: 'reduce', d: 'forEach', correct: 'B' },
+          { text: 'Which statement creates a promise?', a: 'new Async()', b: 'new Promise()', c: 'Promise()', d: 'await Promise', correct: 'B' },
         ];
 
         const stmt = db.prepare(
@@ -73,6 +75,101 @@ const seedData = () => {
 
         stmt.finalize();
         console.log(`${questions.length} questions inserted successfully`);
+        console.log('JavaScript quiz seeded.');
+      }
+    );
+
+    // TypeScript quiz (basic)
+    db.run(
+      `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
+      ['TypeScript Basics', 'Strengthen your TypeScript fundamentals', 'typescript', 'basic'],
+      function (err) {
+        if (err) {
+          console.error('Error inserting TS quiz:', err);
+          return;
+        }
+        const quizId = this.lastID;
+        const questions = [
+          { text: 'Which symbol annotates variable type?', a: ':', b: '->', c: '=>', d: '#', correct: 'A' },
+          { text: 'Which type represents absence of value?', a: 'any', b: 'void', c: 'unknown', d: 'never', correct: 'B' },
+          { text: 'Which type is safer than any for unknown inputs?', a: 'unknown', b: 'void', c: 'never', d: 'object', correct: 'A' },
+          { text: 'What utility makes all props optional?', a: 'Pick', b: 'Partial', c: 'Required', d: 'Readonly', correct: 'B' },
+        ];
+        const stmt = db.prepare(
+          `INSERT INTO questions (quiz_id, question_text, option_a, option_b, option_c, option_d, correct_option) 
+           VALUES (?, ?, ?, ?, ?, ?, ?)`
+        );
+        questions.forEach((q) => stmt.run(quizId, q.text, q.a, q.b, q.c, q.d, q.correct));
+        stmt.finalize();
+        console.log('TypeScript quiz seeded.');
+      }
+    );
+
+    // React quiz (basic)
+    db.run(
+      `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
+      ['React Basics', 'Assess your React knowledge', 'react', 'basic'],
+      function (err) {
+        if (err) {
+          console.error('Error inserting React quiz:', err);
+          return;
+        }
+        const quizId = this.lastID;
+        const questions = [
+          { text: 'What does JSX compile to?', a: 'HTML', b: 'JavaScript', c: 'TypeScript', d: 'XML', correct: 'B' },
+          { text: 'Which hook manages state?', a: 'useMemo', b: 'useEffect', c: 'useState', d: 'useRef', correct: 'C' },
+          { text: 'Which prop passes children into a component?', a: 'child', b: 'children', c: 'content', d: 'slot', correct: 'B' },
+          { text: 'Key helps React with...', a: 'Styling', b: 'Refs', c: 'List diffing', d: 'Hooks', correct: 'C' },
+        ];
+        const stmt = db.prepare(
+          `INSERT INTO questions (quiz_id, question_text, option_a, option_b, option_c, option_d, correct_option) 
+           VALUES (?, ?, ?, ?, ?, ?, ?)`
+        );
+        questions.forEach((q) => stmt.run(quizId, q.text, q.a, q.b, q.c, q.d, q.correct));
+        stmt.finalize();
+        console.log('React quiz seeded.');
+      }
+    );
+
+    // Next.js quiz (basic)
+    db.run(
+      `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
+      ['Next.js Basics', 'Server and routing in Next.js', 'next', 'basic'],
+      function (err) {
+        if (err) {
+          console.error('Error inserting Next.js quiz:', err);
+          return;
+        }
+        const quizId = this.lastID;
+        const questions = [
+          { text: 'Which folder defines file-based routes?', a: 'routes', b: 'pages', c: 'app', d: 'src', correct: 'B' },
+          { text: 'What runs on the server by default in App Router?', a: 'Client Components', b: 'Server Components', c: 'Both', d: 'Neither', correct: 'B' },
+          { text: 'Which command creates a new Next app?', a: 'npx create-next-app', b: 'npm init next', c: 'next new', d: 'npx next-create', correct: 'A' },
+        ];
+    // Advanced variants (short sets)
+    db.run(
+      `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
+      ['JavaScript Advanced', 'Advanced JavaScript patterns and internals', 'javascript', 'advanced']
+    );
+    db.run(
+      `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
+      ['TypeScript Advanced', 'Advanced typing and utilities', 'typescript', 'advanced']
+    );
+    db.run(
+      `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
+      ['React Advanced', 'Concurrent features and performance', 'react', 'advanced']
+    );
+    db.run(
+      `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
+      ['Next.js Advanced', 'Routing, data fetching, and optimization', 'next', 'advanced']
+    );
+        const stmt = db.prepare(
+          `INSERT INTO questions (quiz_id, question_text, option_a, option_b, option_c, option_d, correct_option) 
+           VALUES (?, ?, ?, ?, ?, ?, ?)`
+        );
+        questions.forEach((q) => stmt.run(quizId, q.text, q.a, q.b, q.c, q.d, q.correct));
+        stmt.finalize();
+        console.log('Next.js quiz seeded.');
         console.log('Database seeded successfully!');
       }
     );

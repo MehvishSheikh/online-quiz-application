@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { QuestionCard } from '@/components/QuestionsCards'; 
 import { Timer } from '@/components/QuizTimer';
@@ -11,6 +11,8 @@ import { ChevronLeft, ChevronRight, Send, Loader2 } from 'lucide-react';
 
 export const QuizPage = () => {
   const navigate = useNavigate();
+  const params = useParams();
+  const quizId = Number(params.id || 1);
   const [questions, setQuestions] = useState<Question[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [answers, setAnswers] = useState<Map<number, 'A' | 'B' | 'C' | 'D'>>(new Map());
@@ -23,7 +25,7 @@ export const QuizPage = () => {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const data = await quizApi.getQuestions(1);
+        const data = await quizApi.getQuestions(quizId);
         setQuestions(data);
         setLoading(false);
         start();
@@ -34,7 +36,7 @@ export const QuizPage = () => {
     };
 
     fetchQuestions();
-  }, [start]);
+  }, [start, quizId]);
 
   useEffect(() => {
     if (timeLeft === 0 && questions.length > 0) {
@@ -70,7 +72,7 @@ export const QuizPage = () => {
 
       const stored = sessionStorage.getItem('quiz_user');
       const user: UserInfo | undefined = stored ? JSON.parse(stored) : undefined;
-      const result = await quizApi.submitQuiz(1, submissionAnswers, true, user);
+      const result = await quizApi.submitQuiz(quizId, submissionAnswers, true, user);
       navigate('/results', { state: { result } });
     } catch (err) {
       setError('Failed to submit quiz. Please try again.');

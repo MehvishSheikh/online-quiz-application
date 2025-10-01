@@ -11,7 +11,7 @@ const AppRoutes: React.FC = () => {
     <Routes>
       {/* add routers according to my components */}
       <Route path="/" element={<Navigate to="/start" />} />
-      <Route path="/quiz" element={<QuizPage />} />
+      <Route path="/quiz/:id" element={<QuizPage />} />
       <Route path="/results" element={<ResultsPage/>} />
       <Route path="/start" element={<StartPage/>} />
       <Route path="/history" element={<HistoryPage/>} />

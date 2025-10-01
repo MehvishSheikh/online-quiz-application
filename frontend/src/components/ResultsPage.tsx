@@ -98,9 +98,12 @@ export const ResultsPage = () => {
             )}
           </CardContent>
         </Card>
-        <div className="flex justify-center">
-          <Button onClick={() => navigate('/')}>
+        <div className="flex justify-center gap-2">
+          <Button variant="outline" onClick={() => navigate('/')}> 
             <Home className="w-4 h-4 mr-2" /> Back to Home
+          </Button>
+          <Button onClick={() => navigate('/history')}>
+            View History
           </Button>
         </div>
       </div>

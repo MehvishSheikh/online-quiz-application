@@ -65,6 +65,25 @@ export class QuizService {
     });
   }
 
+  /** List quizzes, optionally filtered by category. */
+  static listQuizzes(category?: string, level?: string): Promise<{ id: number; title: string; description: string; category: string | null; level: string | null }[]> {
+    return new Promise((resolve, reject) => {
+      const base = `SELECT id, title, description, category, level FROM quizzes`;
+      let where = [] as string[];
+      const params = [] as any[];
+      if (category) { where.push('category = ?'); params.push(category); }
+      if (level) { where.push('level = ?'); params.push(level); }
+      const sql = where.length ? `${base} WHERE ${where.join(' AND ')} ORDER BY created_at DESC` : `${base} ORDER BY created_at DESC`;
+      db.all(sql, params, (err, rows: { id: number; title: string; description: string; category: string | null; level: string | null }[]) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        resolve(rows || []);
+      });
+    });
+  }
+
   /** Score a submission and optionally include per-question details. */
   static calculateScore(quizId: number, submission: QuizSubmission, includeDetails: boolean = false): Promise<QuizResult> {
     return new Promise((resolve, reject) => {

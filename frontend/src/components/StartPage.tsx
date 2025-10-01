@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { quizApi } from '@/services/api/api.service';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { BookOpen, Clock, Trophy } from 'lucide-react';
@@ -9,6 +10,15 @@ export const StartPage = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [category, setCategory] = useState<string>('javascript');
+  const [level, setLevel] = useState<string>('basic');
+  const [quizzes, setQuizzes] = useState<{ id: number; title: string; description: string; category: string | null }[]>([]);
+
+  useEffect(() => {
+    quizApi.listQuizzes(category, level)
+      .then(setQuizzes)
+      .catch(() => setQuizzes([]));
+  }, [category, level]);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
@@ -63,6 +73,45 @@ export const StartPage = () => {
           </Button>
 
           <div className="space-y-3">
+            <div>
+              <h4 className="font-semibold mb-2">Choose a topic</h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                {['javascript','typescript','react','next'].map((c) => (
+                  <button
+                    key={c}
+                    onClick={() => setCategory(c)}
+                    className={`px-3 py-2 rounded-md border text-sm ${category===c? 'bg-primary text-white border-primary':'bg-white hover:bg-secondary'}`}
+                  >{c[0].toUpperCase()+c.slice(1)}</button>
+                ))}
+              </div>
+            </div>
+            <div>
+              <h4 className="font-semibold mb-2">Select level</h4>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                {['basic','advanced'].map((l) => (
+                  <button
+                    key={l}
+                    onClick={() => setLevel(l)}
+                    className={`px-3 py-2 rounded-md border text-sm ${level===l? 'bg-primary text-white border-primary':'bg-white hover:bg-secondary'}`}
+                  >{l[0].toUpperCase()+l.slice(1)}</button>
+                ))}
+              </div>
+            </div>
+            {quizzes.length > 0 && (
+              <div>
+                <h4 className="font-semibold mb-2">Available quizzes</h4>
+                <div className="grid gap-2">
+                  {quizzes.slice(0,1).map(q => (
+                    <div key={q.id} className="flex items-center justify-between border rounded-md bg-white p-3">
+                      <div>
+                        <p className="font-medium">{q.title}</p>
+                        <p className="text-sm text-muted-foreground">{q.description}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <input
                 className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
@@ -87,9 +136,10 @@ export const StartPage = () => {
                   return;
                 }
                 setError(null);
-                // Stash user for the quiz page
                 sessionStorage.setItem('quiz_user', JSON.stringify({ username: username.trim(), email: email.trim() }));
-                navigate('/quiz');
+                // Start the selected topic+level quiz (first match)
+                const id = quizzes[0]?.id ?? 1;
+                navigate(`/quiz/${id}`);
               }}
             >
               Start Quiz

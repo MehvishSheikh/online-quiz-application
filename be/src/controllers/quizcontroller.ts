@@ -34,6 +34,21 @@ export class QuizController {
   }
 
   /**
+   * GET /api/quizzes?category=optional
+   * Lists available quizzes.
+   */
+  static async listQuizzes(req: Request, res: Response) {
+    try {
+      const category = req.query.category ? String(req.query.category) : undefined;
+      const level = req.query.level ? String(req.query.level) : undefined;
+      const quizzes = await QuizService.listQuizzes(category, level);
+      res.json({ quizzes });
+    } catch (error) {
+      console.error('Error listing quizzes:', error);
+      res.status(500).json({ error: 'Failed to list quizzes' });
+    }
+  }
+  /**
    * POST /api/quiz/:quizId/submit
    * Checks the payload and returns a score (details optional).
    */

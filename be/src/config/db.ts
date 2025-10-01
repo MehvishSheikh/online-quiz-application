@@ -28,9 +28,14 @@ function initializeDatabase() {
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         title TEXT NOT NULL,
         description TEXT,
+        category TEXT,
+        level TEXT,
         created_at DATETIME DEFAULT CURRENT_TIMESTAMP
       )
     `);
+
+    // Best-effort migration for existing databases
+    db.run(`ALTER TABLE quizzes ADD COLUMN level TEXT`, () => {/* ignore if exists */});
 
     // Questions table
     db.run(`
