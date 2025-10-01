@@ -80,7 +80,7 @@ export const StartPage = () => {
                   <button
                     key={c}
                     onClick={() => setCategory(c)}
-                    className={`px-3 py-2 rounded-md border text-sm ${category===c? 'bg-primary text-white border-primary':'bg-white hover:bg-secondary'}`}
+                    className={`px-3 py-2 rounded-md border text-sm ${category===c? 'bg-primary text-white border-primary':'bg-white text-black hover:bg-secondary'}`}
                   >{c[0].toUpperCase()+c.slice(1)}</button>
                 ))}
               </div>
@@ -92,7 +92,7 @@ export const StartPage = () => {
                   <button
                     key={l}
                     onClick={() => setLevel(l)}
-                    className={`px-3 py-2 rounded-md border text-sm ${level===l? 'bg-primary text-white border-primary':'bg-white hover:bg-secondary'}`}
+                    className={`px-3 py-2 rounded-md border text-sm ${level===l? 'bg-primary text-white border-primary':'bg-white text-black hover:bg-secondary'}`}
                   >{l[0].toUpperCase()+l.slice(1)}</button>
                 ))}
               </div>
