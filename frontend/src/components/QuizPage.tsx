@@ -108,8 +108,10 @@ export const QuizPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 py-8">
       <div className="max-w-4xl mx-auto space-y-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">JavaScript Quiz</h1>
-          <Timer minutes={minutes} seconds={seconds} isWarning={isWarning} />
+          <h1 className="text-2xl font-bold">Quiz</h1>
+          <div className="flex items-center gap-2">
+            <Timer minutes={minutes} seconds={seconds} isWarning={isWarning} />
+          </div>
         </div>
 
         <ProgressBar current={currentIndex} total={questions.length} />

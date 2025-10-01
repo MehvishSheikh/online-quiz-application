@@ -146,22 +146,83 @@ const seedData = () => {
           { text: 'What runs on the server by default in App Router?', a: 'Client Components', b: 'Server Components', c: 'Both', d: 'Neither', correct: 'B' },
           { text: 'Which command creates a new Next app?', a: 'npx create-next-app', b: 'npm init next', c: 'next new', d: 'npx next-create', correct: 'A' },
         ];
-    // Advanced variants (short sets)
+    // Advanced variants with dedicated questions
     db.run(
       `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
-      ['JavaScript Advanced', 'Advanced JavaScript patterns and internals', 'javascript', 'advanced']
+      ['JavaScript Advanced', 'Advanced JavaScript patterns and internals', 'javascript', 'advanced'],
+      function (err) {
+        if (err) return;
+        const quizId = this.lastID;
+        const questions = [
+          { text: 'Which method binds a function to a context and returns a new function?', a: 'call', b: 'apply', c: 'bind', d: 'attach', correct: 'C' },
+          { text: 'What is the BigInt literal suffix?', a: 'L', b: 'n', c: 'b', d: 'i', correct: 'B' },
+          { text: 'Which is NOT a valid microtask source?', a: 'Promise.then', b: 'queueMicrotask', c: 'MutationObserver', d: 'setTimeout', correct: 'D' },
+          { text: 'Which pattern avoids polluting global scope?', a: 'IIFE', b: 'Prototype', c: 'Observer', d: 'Factory', correct: 'A' },
+        ];
+        const stmt = db.prepare(
+          `INSERT INTO questions (quiz_id, question_text, option_a, option_b, option_c, option_d, correct_option) 
+           VALUES (?, ?, ?, ?, ?, ?, ?)`
+        );
+        questions.forEach((q) => stmt.run(quizId, q.text, q.a, q.b, q.c, q.d, q.correct));
+        stmt.finalize();
+      }
     );
     db.run(
       `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
-      ['TypeScript Advanced', 'Advanced typing and utilities', 'typescript', 'advanced']
+      ['TypeScript Advanced', 'Advanced typing and utilities', 'typescript', 'advanced'],
+      function (err) {
+        if (err) return;
+        const quizId = this.lastID;
+        const questions = [
+          { text: 'Which type flattens union of object types by id?', a: 'Extract', b: 'Exclude', c: 'Distributive Omit', d: 'No built-in', correct: 'D' },
+          { text: 'What does satisfies operator do?', a: 'Casts type', b: 'Checks assignment without widening', c: 'Narrows union', d: 'Creates generic', correct: 'B' },
+          { text: 'Which utility maps all properties to never?', a: 'Record<string, never>', b: 'Partial<T>', c: 'Readonly<T>', d: 'Required<T>', correct: 'A' },
+        ];
+        const stmt = db.prepare(
+          `INSERT INTO questions (quiz_id, question_text, option_a, option_b, option_c, option_d, correct_option) 
+           VALUES (?, ?, ?, ?, ?, ?, ?)`
+        );
+        questions.forEach((q) => stmt.run(quizId, q.text, q.a, q.b, q.c, q.d, q.correct));
+        stmt.finalize();
+      }
     );
     db.run(
       `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
-      ['React Advanced', 'Concurrent features and performance', 'react', 'advanced']
+      ['React Advanced', 'Concurrent features and performance', 'react', 'advanced'],
+      function (err) {
+        if (err) return;
+        const quizId = this.lastID;
+        const questions = [
+          { text: 'Which feature allows interruptible rendering?', a: 'Suspense', b: 'Concurrent Rendering', c: 'Profiler', d: 'Memo', correct: 'B' },
+          { text: 'Which hook schedules low-priority updates?', a: 'useDeferredValue', b: 'useTransition', c: 'useLayoutEffect', d: 'useSyncExternalStore', correct: 'B' },
+          { text: 'Which improves list performance?', a: 'index as key', b: 'memo without props', c: 'virtualization', d: 'inline handlers only', correct: 'C' },
+        ];
+        const stmt = db.prepare(
+          `INSERT INTO questions (quiz_id, question_text, option_a, option_b, option_c, option_d, correct_option) 
+           VALUES (?, ?, ?, ?, ?, ?, ?)`
+        );
+        questions.forEach((q) => stmt.run(quizId, q.text, q.a, q.b, q.c, q.d, q.correct));
+        stmt.finalize();
+      }
     );
     db.run(
       `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
-      ['Next.js Advanced', 'Routing, data fetching, and optimization', 'next', 'advanced']
+      ['Next.js Advanced', 'Routing, data fetching, and optimization', 'next', 'advanced'],
+      function (err) {
+        if (err) return;
+        const quizId = this.lastID;
+        const questions = [
+          { text: 'Which data fetching runs at build time?', a: 'generateStaticParams', b: 'route handlers', c: 'client fetch', d: 'middleware', correct: 'A' },
+          { text: 'What header enables edge caching?', a: 'Cache-Control', b: 'ETag', c: 'Vary', d: 'Link', correct: 'A' },
+          { text: 'Which dir is for server components by default?', a: 'pages', b: 'app', c: 'server', d: 'src', correct: 'B' },
+        ];
+        const stmt = db.prepare(
+          `INSERT INTO questions (quiz_id, question_text, option_a, option_b, option_c, option_d, correct_option) 
+           VALUES (?, ?, ?, ?, ?, ?, ?)`
+        );
+        questions.forEach((q) => stmt.run(quizId, q.text, q.a, q.b, q.c, q.d, q.correct));
+        stmt.finalize();
+      }
     );
         const stmt = db.prepare(
           `INSERT INTO questions (quiz_id, question_text, option_a, option_b, option_c, option_d, correct_option) 
