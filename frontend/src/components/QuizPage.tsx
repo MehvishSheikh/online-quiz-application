@@ -29,6 +29,20 @@ export const QuizPage = () => {
         setQuestions(data);
         setLoading(false);
         start();
+        // request fullscreen
+        const el = document.documentElement as any;
+        if (el && el.requestFullscreen) {
+          try { await el.requestFullscreen(); } catch {}
+        }
+        // visibility change warning
+        const onVisibility = () => {
+          if (document.hidden) {
+            alert('Please stay on the quiz. Minimizing or switching may end your attempt.');
+            navigate('/');
+          }
+        };
+        document.addEventListener('visibilitychange', onVisibility);
+        return () => document.removeEventListener('visibilitychange', onVisibility);
       } catch (err) {
         setError('Failed to load questions. Please try again.');
         setLoading(false);
@@ -73,7 +87,7 @@ export const QuizPage = () => {
       const stored = sessionStorage.getItem('quiz_user');
       const user: UserInfo | undefined = stored ? JSON.parse(stored) : undefined;
       const result = await quizApi.submitQuiz(quizId, submissionAnswers, true, user);
-      navigate('/results', { state: { result } });
+      navigate('/results', { state: { result, quizId } });
     } catch (err) {
       setError('Failed to submit quiz. Please try again.');
       setSubmitting(false);
@@ -99,6 +113,20 @@ export const QuizPage = () => {
     );
   }
 
+  if (questions.length === 0) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <div className="text-center">
+          <p className="mb-4">No questions found for this quiz yet. Please add questions and try again.</p>
+          <div className="flex gap-2 justify-center">
+            <Button variant="outline" onClick={() => navigate('/dashboard')}>Back to Dashboard</Button>
+            <Button onClick={() => navigate('/admin/create')}>Create Questions</Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   const currentQuestion = questions[currentIndex];
   const isLastQuestion = currentIndex === questions.length - 1;
   const answeredCount = answers.size;
@@ -106,10 +134,13 @@ export const QuizPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 py-8">
-      <div className="max-w-4xl mx-auto space-y-6">
+      <div className="max-w-6xl mx-auto space-y-6">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">JavaScript Quiz</h1>
-          <Timer minutes={minutes} seconds={seconds} isWarning={isWarning} />
+          <h1 className="text-2xl font-bold">Quiz</h1>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" onClick={() => navigate(`/leaderboard/${quizId}`)}>Leaderboard</Button>
+            <Timer minutes={minutes} seconds={seconds} isWarning={isWarning} />
+          </div>
         </div>
 
         <ProgressBar current={currentIndex} total={questions.length} />

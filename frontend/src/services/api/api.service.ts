@@ -42,5 +42,28 @@ export const quizApi = {
     if (level) params.append('level', level);
     const response = await axios.get(`${API_BASE_URL}/quizzes${params.toString() ? `?${params.toString()}` : ''}`);
     return response.data.quizzes;
+  },
+  // Admin: create quiz
+  createQuiz: async (payload: { title: string; description?: string; category: string; level: string }): Promise<{ id: number }> => {
+    const response = await axios.post(`${API_BASE_URL}/quizzes`, payload);
+    return response.data;
+  },
+
+  // Admin: add question
+  addQuestion: async (
+    quizId: number,
+    payload: { question_text: string; option_a: string; option_b: string; option_c: string; option_d: string; correct_option: 'A'|'B'|'C'|'D' }
+  ): Promise<{ id: number }> => {
+    const response = await axios.post(`${API_BASE_URL}/quizzes/${quizId}/questions`, payload);
+    return response.data;
+  },
+
+  // Leaderboard for a quiz
+  getLeaderboard: async (
+    quizId: number,
+    limit: number = 10
+  ): Promise<Array<{ rank: number; username: string; email: string; score_percentage: number; correct_answers: number; total_questions: number; created_at: string }>> => {
+    const response = await axios.get(`${API_BASE_URL}/quiz/${quizId}/leaderboard?limit=${limit}`);
+    return response.data.leaderboard;
   }
 };

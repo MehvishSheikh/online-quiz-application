@@ -64,13 +64,22 @@ export const StartPage = () => {
             </ul>
           </div>
 
-          <Button 
-            variant="outline"
-            className="w-full"
-            onClick={() => navigate('/history')}
-          >
-            View History
-          </Button>
+          <div className="grid grid-cols-2 gap-3">
+            <Button 
+              variant="outline"
+              onClick={() => navigate('/history')}
+            >
+              View History
+            </Button>
+            {quizzes[0] && (
+              <Button 
+                variant="outline"
+                onClick={() => navigate(`/leaderboard/${quizzes[0].id}`)}
+              >
+                View Leaderboard
+              </Button>
+            )}
+          </div>
 
           <div className="space-y-3">
             <div>

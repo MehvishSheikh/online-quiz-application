@@ -1,6 +1,7 @@
 // ==================== src/pages/ResultsPage.tsx ====================
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { quizApi } from '@/services/api/api.service';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { type QuizResult } from '@/types/quiz.types';
 import { Trophy, CheckCircle2, XCircle, Home } from 'lucide-react';
@@ -10,6 +11,7 @@ export const ResultsPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const result = location.state?.result as QuizResult;
+  const quizId = location.state?.quizId as number | undefined;
 
   if (!result) {
     navigate('/');
@@ -102,6 +104,11 @@ export const ResultsPage = () => {
           <Button variant="outline" onClick={() => navigate('/')}> 
             <Home className="w-4 h-4 mr-2" /> Back to Home
           </Button>
+          {quizId && (
+            <Button onClick={() => navigate(`/leaderboard/${quizId}`)}>
+              View Leaderboard
+            </Button>
+          )}
           <Button onClick={() => navigate('/history')}>
             View History
           </Button>

@@ -126,4 +126,77 @@ export class QuizController {
       res.status(500).json({ error: 'Failed to fetch attempts' });
     }
   }
+
+  /**
+   * GET /api/quiz/:quizId/leaderboard?limit=10
+   */
+  static async getLeaderboard(req: Request, res: Response) {
+    try {
+      const quizId = parseInt(req.params.quizId);
+      if (isNaN(quizId)) {
+        res.status(400).json({ error: 'Invalid quiz ID' });
+        return;
+      }
+      const limit = req.query.limit ? Math.max(1, parseInt(String(req.query.limit))) : 10;
+      const board = await QuizService.getLeaderboard(quizId, limit);
+      res.json({ leaderboard: board });
+    } catch (error) {
+      console.error('Error fetching leaderboard:', error);
+      res.status(500).json({ error: 'Failed to fetch leaderboard' });
+    }
+  }
+  /**
+   * POST /api/quizzes
+   * Create a quiz (title, description, category, level)
+   */
+  static async createQuiz(req: Request, res: Response) {
+    try {
+      const { title, description, category, level } = req.body || {};
+      if (!title || !category || !level) {
+        res.status(400).json({ error: 'title, category and level are required' });
+        return;
+      }
+      const sql = `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`;
+      const params = [title, description || '', category, level];
+      const { db } = await import('../config/db');
+      (db as any).run(sql, params, function (this: { lastID: number }, err: any) {
+        if (err) {
+          res.status(500).json({ error: 'Failed to create quiz' });
+          return;
+        }
+        const lastID = this.lastID;
+        res.status(201).json({ id: lastID });
+      });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to create quiz' });
+    }
+  }
+
+  /**
+   * POST /api/quizzes/:quizId/questions
+   * Add a question
+   */
+  static async addQuestion(req: Request, res: Response) {
+    try {
+      const quizId = parseInt(req.params.quizId);
+      const { question_text, option_a, option_b, option_c, option_d, correct_option } = req.body || {};
+      if (isNaN(quizId) || !question_text || !option_a || !option_b || !option_c || !option_d || !correct_option) {
+        res.status(400).json({ error: 'Invalid payload' });
+        return;
+      }
+      const sql = `INSERT INTO questions (quiz_id, question_text, option_a, option_b, option_c, option_d, correct_option) VALUES (?, ?, ?, ?, ?, ?, ?)`;
+      const params = [quizId, question_text, option_a, option_b, option_c, option_d, correct_option];
+      const { db } = await import('../config/db');
+      (db as any).run(sql, params, function (this: { lastID: number }, err: any) {
+        if (err) {
+          res.status(500).json({ error: 'Failed to add question' });
+          return;
+        }
+        const lastID = this.lastID;
+        res.status(201).json({ id: lastID });
+      });
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to add question' });
+    }
+  }
 }

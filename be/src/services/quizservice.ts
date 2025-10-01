@@ -199,4 +199,42 @@ export class QuizService {
       });
     });
   }
+
+  /** Leaderboard for a quiz: highest score first, newest first on ties */
+  static getLeaderboard(quizId: number, limit: number = 10): Promise<Array<{
+    rank: number;
+    username: string;
+    email: string;
+    score_percentage: number;
+    correct_answers: number;
+    total_questions: number;
+    created_at: string;
+  }>> {
+    return new Promise((resolve, reject) => {
+      const sql = `
+        SELECT u.username, u.email, a.score_percentage, a.correct_answers, a.total_questions, a.created_at
+        FROM attempts a
+        JOIN users u ON u.id = a.user_id
+        WHERE a.quiz_id = ?
+        ORDER BY a.score_percentage DESC, a.created_at DESC
+        LIMIT ?`;
+
+      db.all(sql, [quizId, limit], (err, rows: any[]) => {
+        if (err) {
+          reject(err);
+          return;
+        }
+        const ranked = (rows || []).map((r, idx) => ({
+          rank: idx + 1,
+          username: r.username,
+          email: r.email,
+          score_percentage: r.score_percentage,
+          correct_answers: r.correct_answers,
+          total_questions: r.total_questions,
+          created_at: r.created_at,
+        }));
+        resolve(ranked);
+      });
+    });
+  }
 }

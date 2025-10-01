@@ -8,5 +8,8 @@ router.get('/quiz/:quizId/questions', QuizController.getQuestions);
 router.post('/quiz/:quizId/submit', QuizController.submitQuiz);
 router.get('/quiz/attempts', QuizController.getAttempts);
 router.get('/quizzes', QuizController.listQuizzes);
+router.get('/quiz/:quizId/leaderboard', QuizController.getLeaderboard);
+router.post('/quizzes', QuizController.createQuiz);
+router.post('/quizzes/:quizId/questions', QuizController.addQuestion);
 
 export default router;

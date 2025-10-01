@@ -2,6 +2,10 @@ import { QuizPage } from '@/components/QuizPage';
 import { ResultsPage } from '@/components/ResultsPage';
 import { StartPage } from '@/components/StartPage';
 import { HistoryPage } from '@/components/HistoryPage';
+import { LeaderboardPage } from '@/components/LeaderboardPage';
+import { AdminCreateQuiz } from '@/components/AdminCreateQuiz';
+import { HomePage } from '@/components/HomePage';
+import { DashboardPage } from '@/components/DashboardPage';
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
@@ -10,11 +14,14 @@ const AppRoutes: React.FC = () => {
   return (
     <Routes>
       {/* add routers according to my components */}
-      <Route path="/" element={<Navigate to="/start" />} />
+      <Route path="/" element={<Navigate to="/home" />} />
+      <Route path="/home" element={<HomePage/>} />
+      <Route path="/dashboard" element={<DashboardPage/>} />
       <Route path="/quiz/:id" element={<QuizPage />} />
       <Route path="/results" element={<ResultsPage/>} />
-      <Route path="/start" element={<StartPage/>} />
       <Route path="/history" element={<HistoryPage/>} />
+      <Route path="/leaderboard/:id" element={<LeaderboardPage/>} />
+      <Route path="/admin/create" element={<AdminCreateQuiz/>} />
 
 
     </Routes>
