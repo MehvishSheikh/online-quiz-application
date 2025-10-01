@@ -2,8 +2,14 @@ import { Request, Response } from 'express';
 import { QuizService } from '../services/quizservice';
 import { QuizSubmission } from '../models/quizmodel';
 
+/**
+ * Quiz endpoints. Validate the basics here and let the service do the heavy lifting.
+ */
 export class QuizController {
-  // GET /api/quiz/:quizId/questions
+  /**
+   * GET /api/quiz/:quizId/questions
+   * Sends questions without leaking correct answers.
+   */
   static async getQuestions(req: Request, res: Response) {
     try {
       const quizId = parseInt(req.params.quizId);
@@ -27,7 +33,10 @@ export class QuizController {
     }
   }
 
-  // POST /api/quiz/:quizId/submit
+  /**
+   * POST /api/quiz/:quizId/submit
+   * Checks the payload and returns a score (details optional).
+   */
   static async submitQuiz(req: Request, res: Response) {
     try {
       const quizId = parseInt(req.params.quizId);

@@ -1,8 +1,11 @@
 import { db } from '../config/db'
 import { Question, QuestionResponse, QuizSubmission, QuizResult } from '../models/quizmodel';
 
+/**
+ * Quiz domain logic: data access + scoring.
+ */
 export class QuizService {
-  // Fetch all questions for a quiz (without correct answers)
+  /** Fetch questions for a quiz (no correct answers). */
   static getQuestions(quizId: number): Promise<QuestionResponse[]> {
     return new Promise((resolve, reject) => {
       const query = `SELECT id, question_text, option_a, option_b, option_c, option_d 
@@ -30,7 +33,7 @@ export class QuizService {
     });
   }
 
-  // Calculate score and return results
+  /** Score a submission and optionally include per-question details. */
   static calculateScore(quizId: number, submission: QuizSubmission, includeDetails: boolean = false): Promise<QuizResult> {
     return new Promise((resolve, reject) => {
       const query = `SELECT id, question_text, option_a, option_b, option_c, option_d, correct_option 
@@ -50,7 +53,7 @@ export class QuizService {
         let correctCount = 0;
         const details = [];
 
-        // Create a map for quick lookup
+        // Quick lookup for user answers
         const answerMap = new Map(
           submission.answers.map((a) => [a.question_id, a.selected_option])
         );
@@ -92,7 +95,7 @@ export class QuizService {
     });
   }
 
-  // Check if quiz exists
+  /** Check if a quiz exists by ID. */
   static quizExists(quizId: number): Promise<boolean> {
     return new Promise((resolve, reject) => {
       db.get('SELECT id FROM quizzes WHERE id = ?', [quizId], (err, row) => {

@@ -1,8 +1,13 @@
+// SQLite setup and bootstrapping
 import sqlite3 from 'sqlite3';
 import path from 'path';
 
+// Pick DB file from env or use a sensible default
 const dbPath = process.env.DB_PATH || path.join(__dirname, '../../quiz.db');
 
+/**
+ * Shared SQLite connection. We kick off schema setup on connect.
+ */
 export const db = new sqlite3.Database(dbPath, (err) => {
   if (err) {
     console.error('Error opening database:', err);
@@ -12,9 +17,12 @@ export const db = new sqlite3.Database(dbPath, (err) => {
   }
 });
 
+/**
+ * Create tables if they're missing.
+ */
 function initializeDatabase() {
   db.serialize(() => {
-    // Create quizzes table
+    // Quizzes table
     db.run(`
       CREATE TABLE IF NOT EXISTS quizzes (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -24,7 +32,7 @@ function initializeDatabase() {
       )
     `);
 
-    // Create questions table
+    // Questions table
     db.run(`
       CREATE TABLE IF NOT EXISTS questions (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -41,6 +49,9 @@ function initializeDatabase() {
   });
 }
 
+/**
+ * Close the DB connection politely.
+ */
 export const closeDatabase = () => {
   db.close((err) => {
     if (err) {

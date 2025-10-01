@@ -1,3 +1,6 @@
+/**
+ * DB row for a single question.
+ */
 export interface Question {
   id: number;
   quiz_id: number;
@@ -9,6 +12,9 @@ export interface Question {
   correct_option: 'A' | 'B' | 'C' | 'D';
 }
 
+/**
+ * What the client sees (no correct answer).
+ */
 export interface QuestionResponse {
   id: number;
   question_text: string;
@@ -20,15 +26,18 @@ export interface QuestionResponse {
   };
 }
 
+/** A single submitted answer. */
 export interface AnswerSubmission {
   question_id: number;
   selected_option: 'A' | 'B' | 'C' | 'D';
 }
 
+/** A full submission with multiple answers. */
 export interface QuizSubmission {
   answers: AnswerSubmission[];
 }
 
+/** Score summary, with optional per-question breakdown. */
 export interface QuizResult {
   total_questions: number;
   correct_answers: number;

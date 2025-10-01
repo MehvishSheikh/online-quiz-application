@@ -1,5 +1,8 @@
 import { db } from '../config/db';
 
+/**
+ * Seed the DB with one sample quiz and a few starter questions.
+ */
 const seedData = () => {
   db.serialize(() => {
     // Insert a quiz
