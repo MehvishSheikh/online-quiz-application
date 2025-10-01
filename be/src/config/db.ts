@@ -46,6 +46,31 @@ function initializeDatabase() {
         FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
       )
     `);
+
+    // Users table
+    db.run(`
+      CREATE TABLE IF NOT EXISTS users (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        username TEXT NOT NULL,
+        email TEXT NOT NULL UNIQUE,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
+    // Attempts table
+    db.run(`
+      CREATE TABLE IF NOT EXISTS attempts (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        quiz_id INTEGER NOT NULL,
+        total_questions INTEGER NOT NULL,
+        correct_answers INTEGER NOT NULL,
+        score_percentage INTEGER NOT NULL,
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id),
+        FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
+      )
+    `);
   });
 }
 

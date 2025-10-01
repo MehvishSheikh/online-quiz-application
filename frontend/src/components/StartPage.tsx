@@ -1,10 +1,14 @@
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { BookOpen, Clock, Trophy } from 'lucide-react';
 
 export const StartPage = () => {
   const navigate = useNavigate();
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 p-4">
@@ -51,12 +55,46 @@ export const StartPage = () => {
           </div>
 
           <Button 
-            size="lg" 
-            className="w-full text-lg"
-            onClick={() => navigate('/quiz')}
+            variant="outline"
+            className="w-full"
+            onClick={() => navigate('/history')}
           >
-            Start Quiz
+            View History
           </Button>
+
+          <div className="space-y-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <input
+                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                placeholder="Your name"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+              <input
+                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
+                placeholder="Email address"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            {error && <p className="text-destructive text-sm">{error}</p>}
+            <Button 
+              size="lg" 
+              className="w-full text-lg"
+              onClick={() => {
+                if (!username.trim() || !email.trim()) {
+                  setError('Please enter your name and email');
+                  return;
+                }
+                setError(null);
+                // Stash user for the quiz page
+                sessionStorage.setItem('quiz_user', JSON.stringify({ username: username.trim(), email: email.trim() }));
+                navigate('/quiz');
+              }}
+            >
+              Start Quiz
+            </Button>
+          </div>
         </CardContent>
       </Card>
     </div>

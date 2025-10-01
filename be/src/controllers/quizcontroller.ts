@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { QuizService } from '../services/quizservice';
-import { QuizSubmission } from '../models/quizmodel';
+import { QuizSubmission, UserInfo } from '../models/quizmodel';
 
 /**
  * Quiz endpoints. Validate the basics here and let the service do the heavy lifting.
@@ -41,6 +41,7 @@ export class QuizController {
     try {
       const quizId = parseInt(req.params.quizId);
       const submission: QuizSubmission = req.body;
+      const user: UserInfo | undefined = req.body?.user;
       const includeDetails = req.query.details === 'true';
 
       if (isNaN(quizId)) {
@@ -66,10 +67,48 @@ export class QuizController {
       }
 
       const result = await QuizService.calculateScore(quizId, submission, includeDetails);
+
+      // User handling is optional for backward compatibility
+      if (user && user.email && user.username) {
+        try {
+          const userId = await QuizService.upsertUser(user);
+          await QuizService.recordAttempt(userId, quizId, result);
+        } catch (e) {
+          console.error('Failed to record attempt:', e);
+          // Do not fail the response if attempt logging fails
+        }
+      }
+
       res.json(result);
     } catch (error) {
       console.error('Error submitting quiz:', error);
       res.status(500).json({ error: 'Failed to calculate score' });
+    }
+  }
+
+  /**
+   * GET /api/quiz/attempts?email=...&quizId=optional
+   * Returns attempts for a user (filtered by quiz if provided).
+   */
+  static async getAttempts(req: Request, res: Response) {
+    try {
+      const email = String(req.query.email || '').trim();
+      const quizId = req.query.quizId ? parseInt(String(req.query.quizId)) : undefined;
+
+      if (!email) {
+        res.status(400).json({ error: 'email is required' });
+        return;
+      }
+      if (quizId !== undefined && isNaN(quizId)) {
+        res.status(400).json({ error: 'Invalid quizId' });
+        return;
+      }
+
+      const attempts = await QuizService.getAttempts(email, quizId);
+      res.json({ attempts });
+    } catch (error) {
+      console.error('Error fetching attempts:', error);
+      res.status(500).json({ error: 'Failed to fetch attempts' });
     }
   }
 }

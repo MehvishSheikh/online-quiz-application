@@ -1,6 +1,7 @@
 import { QuizPage } from '@/components/QuizPage';
 import { ResultsPage } from '@/components/ResultsPage';
 import { StartPage } from '@/components/StartPage';
+import { HistoryPage } from '@/components/HistoryPage';
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
@@ -13,6 +14,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/quiz" element={<QuizPage />} />
       <Route path="/results" element={<ResultsPage/>} />
       <Route path="/start" element={<StartPage/>} />
+      <Route path="/history" element={<HistoryPage/>} />
 
 
     </Routes>

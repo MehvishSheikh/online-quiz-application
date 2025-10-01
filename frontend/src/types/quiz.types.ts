@@ -28,3 +28,19 @@ export interface QuizDetail {
   correct_answer: string;
   is_correct: boolean;
 }
+
+// --- User ---
+export interface UserInfo {
+  username: string;
+  email: string;
+}
+
+export interface AttemptRecord {
+  id: number;
+  user_id: number;
+  quiz_id: number;
+  total_questions: number;
+  correct_answers: number;
+  score_percentage: number;
+  created_at: string;
+}

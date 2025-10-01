@@ -6,7 +6,7 @@ import { Timer } from '@/components/QuizTimer';
 import { ProgressBar } from '@/components/ProgressBar';
 import { useTimer } from '@/hooks/useTimer';
 import { quizApi } from '@/services/api/api.service'
-import { type Question, type Answer } from '@/types/quiz.types';
+import { type Question, type Answer, type UserInfo } from '@/types/quiz.types';
 import { ChevronLeft, ChevronRight, Send, Loader2 } from 'lucide-react';
 
 export const QuizPage = () => {
@@ -68,7 +68,9 @@ export const QuizPage = () => {
         })
       );
 
-      const result = await quizApi.submitQuiz(1, submissionAnswers, true);
+      const stored = sessionStorage.getItem('quiz_user');
+      const user: UserInfo | undefined = stored ? JSON.parse(stored) : undefined;
+      const result = await quizApi.submitQuiz(1, submissionAnswers, true, user);
       navigate('/results', { state: { result } });
     } catch (err) {
       setError('Failed to submit quiz. Please try again.');

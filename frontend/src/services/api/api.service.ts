@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { type Question, type Answer, type QuizResult } from '../../types/quiz.types';
+import { type Question, type Answer, type QuizResult, type UserInfo, type AttemptRecord } from '../../types/quiz.types';
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
@@ -14,12 +14,21 @@ export const quizApi = {
   submitQuiz: async (
     quizId: number,
     answers: Answer[],
-    includeDetails: boolean = false
+    includeDetails: boolean = false,
+    user?: UserInfo
   ): Promise<QuizResult> => {
     const response = await axios.post(
       `${API_BASE_URL}/quiz/${quizId}/submit${includeDetails ? '?details=true' : ''}`,
-      { answers }
+      user ? { user, answers } : { answers }
     );
     return response.data;
   },
+
+  // Get attempts for a user (optionally by quiz)
+  getAttempts: async (email: string, quizId?: number): Promise<AttemptRecord[]> => {
+    const params = new URLSearchParams({ email });
+    if (quizId) params.append('quizId', String(quizId));
+    const response = await axios.get(`${API_BASE_URL}/quiz/attempts?${params.toString()}`);
+    return response.data.attempts;
+  }
 };

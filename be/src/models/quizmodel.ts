@@ -50,3 +50,25 @@ export interface QuizResult {
     is_correct: boolean;
   }[];
 }
+
+// --- Users & Attempts ---
+
+export interface UserInfo {
+  username: string;
+  email: string;
+}
+
+export interface User extends UserInfo {
+  id: number;
+  created_at: string;
+}
+
+export interface AttemptRecord {
+  id: number;
+  user_id: number;
+  quiz_id: number;
+  total_questions: number;
+  correct_answers: number;
+  score_percentage: number;
+  created_at: string;
+}
