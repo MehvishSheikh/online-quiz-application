@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { quizApi } from '@/services/api/api.service';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 export const LeaderboardPage = () => {
   const { id } = useParams();
@@ -24,7 +25,10 @@ export const LeaderboardPage = () => {
   return (
     <div className="min-h-screen bg-background text-foreground p-4 py-8">
       <div className="max-w-3xl mx-auto space-y-4">
-        <h1 className="text-2xl font-bold">Leaderboard</h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl font-bold">Leaderboard</h1>
+          <ThemeToggle />
+        </div>
         <div className="bg-white dark:bg-card border rounded-md">
           <div className="grid grid-cols-6 px-4 py-2 text-sm font-semibold border-b">
             <div>Rank</div>

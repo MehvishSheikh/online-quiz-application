@@ -7,7 +7,8 @@ import { ProgressBar } from '@/components/ProgressBar';
 import { useTimer } from '@/hooks/useTimer';
 import { quizApi } from '@/services/api/api.service'
 import { type Question, type Answer, type UserInfo } from '@/types/quiz.types';
-import { ChevronLeft, ChevronRight, Send, Loader2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Send, Loader2, BookOpen, Trophy, Home, AlertTriangle } from 'lucide-react';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 export const QuizPage = () => {
   const navigate = useNavigate();
@@ -96,7 +97,7 @@ export const QuizPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-background">
         <Loader2 className="w-8 h-8 animate-spin text-primary" />
       </div>
     );
@@ -104,7 +105,7 @@ export const QuizPage = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-background">
         <div className="text-center">
           <p className="text-destructive mb-4">{error}</p>
           <Button onClick={() => navigate('/')}>Go Back</Button>
@@ -115,7 +116,7 @@ export const QuizPage = () => {
 
   if (questions.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-background">
         <div className="text-center">
           <p className="mb-4">No questions found for this quiz yet. Please add questions and try again.</p>
           <div className="flex gap-2 justify-center">
@@ -133,60 +134,113 @@ export const QuizPage = () => {
   const isWarning = timeLeft < 60;
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 py-8">
-      <div className="max-w-6xl mx-auto space-y-6">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Quiz</h1>
-          <div className="flex items-center gap-2">
-            <Button variant="outline" onClick={() => navigate(`/leaderboard/${quizId}`)}>Leaderboard</Button>
+    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-primary/10">
+      <div className="max-w-6xl mx-auto">
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 lg:p-6 border-b border-border/50 bg-card/50 backdrop-blur-sm">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg">
+              <BookOpen className="w-4 h-4 text-primary-foreground" />
+            </div>
+            <div>
+              <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Quiz Challenge</h1>
+              <p className="text-sm text-muted-foreground">Question {currentIndex + 1} of {questions.length}</p>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
             <Timer minutes={minutes} seconds={seconds} isWarning={isWarning} />
+            <Button variant="ghost" size="sm" onClick={() => navigate(`/leaderboard/${quizId}`)}>
+              <Trophy className="w-4 h-4 mr-2" />
+              Leaderboard
+            </Button>
+            <ThemeToggle />
           </div>
         </div>
 
-        <ProgressBar current={currentIndex} total={questions.length} />
-
-        <QuestionCard
-          question={currentQuestion}
-          currentIndex={currentIndex}
-          totalQuestions={questions.length}
-          selectedOption={answers.get(currentQuestion.id)}
-          onSelectOption={handleSelectOption}
-        />
-
-        <div className="flex justify-between items-center gap-4">
-          <Button
-            variant="outline"
-            onClick={handlePrevious}
-            disabled={currentIndex === 0}
-          >
-            <ChevronLeft className="w-4 h-4 mr-2" />
-            Previous
-          </Button>
-
-          <div className="text-sm text-muted-foreground">
-            {answeredCount} of {questions.length} answered
+        {/* Progress */}
+        <div className="p-4 lg:p-6 pb-4">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm font-medium">Progress</span>
+            <span className="text-sm text-muted-foreground">
+              {answeredCount} of {questions.length} answered
+            </span>
           </div>
+          <ProgressBar current={currentIndex} total={questions.length} />
+        </div>
 
-          {isLastQuestion ? (
-            <Button onClick={handleSubmit} disabled={submitting}>
-              {submitting ? (
-                <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Submitting...
-                </>
-              ) : (
-                <>
-                  <Send className="w-4 h-4 mr-2" />
-                  Submit Quiz
-                </>
-              )}
+        {/* Warning for low time */}
+        {isWarning && (
+          <div className="mx-4 lg:mx-6 mb-4">
+            <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-3 flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 text-destructive" />
+              <span className="text-sm text-destructive font-medium">
+                Less than 1 minute remaining!
+              </span>
+            </div>
+          </div>
+        )}
+
+        {/* Question */}
+        <div className="px-4 lg:px-6 pb-6">
+          <QuestionCard
+            question={currentQuestion}
+            currentIndex={currentIndex}
+            totalQuestions={questions.length}
+            selectedOption={answers.get(currentQuestion.id)}
+            onSelectOption={handleSelectOption}
+          />
+        </div>
+
+        {/* Navigation */}
+        <div className="border-t p-4 lg:p-6">
+          <div className="flex justify-between items-center">
+            <Button
+              variant="outline"
+              onClick={handlePrevious}
+              disabled={currentIndex === 0}
+              className="flex items-center gap-2"
+            >
+              <ChevronLeft className="w-4 h-4" />
+              Previous
             </Button>
-          ) : (
-            <Button onClick={handleNext}>
-              Next
-              <ChevronRight className="w-4 h-4 ml-2" />
-            </Button>
-          )}
+
+            <div className="flex items-center gap-4">
+              <Button
+                variant="ghost"
+                onClick={() => navigate('/dashboard')}
+                className="text-muted-foreground hover:text-foreground"
+              >
+                <Home className="w-4 h-4 mr-2" />
+                Exit Quiz
+              </Button>
+            </div>
+
+            {isLastQuestion ? (
+              <Button 
+                onClick={handleSubmit} 
+                disabled={submitting}
+                size="lg"
+                className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-lg hover:shadow-xl transition-all duration-200"
+              >
+                {submitting ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Submitting...
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-4 h-4 mr-2" />
+                    Submit Quiz
+                  </>
+                )}
+              </Button>
+            ) : (
+              <Button onClick={handleNext} size="lg" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all duration-200">
+                Next Question
+                <ChevronRight className="w-4 h-4 ml-2" />
+              </Button>
+            )}
+          </div>
         </div>
       </div>
     </div>

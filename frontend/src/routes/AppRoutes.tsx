@@ -1,11 +1,11 @@
 import { QuizPage } from '@/components/QuizPage';
 import { ResultsPage } from '@/components/ResultsPage';
-import { StartPage } from '@/components/StartPage';
 import { HistoryPage } from '@/components/HistoryPage';
 import { LeaderboardPage } from '@/components/LeaderboardPage';
 import { AdminCreateQuiz } from '@/components/AdminCreateQuiz';
 import { HomePage } from '@/components/HomePage';
 import { DashboardPage } from '@/components/DashboardPage';
+import { AIAssessmentPage } from '@/components/AIAssessmentPage';
 import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
@@ -17,6 +17,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/" element={<Navigate to="/home" />} />
       <Route path="/home" element={<HomePage/>} />
       <Route path="/dashboard" element={<DashboardPage/>} />
+      <Route path="/ai-assessment" element={<AIAssessmentPage/>} />
       <Route path="/quiz/:id" element={<QuizPage />} />
       <Route path="/results" element={<ResultsPage/>} />
       <Route path="/history" element={<HistoryPage/>} />

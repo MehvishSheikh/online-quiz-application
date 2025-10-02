@@ -35,7 +35,16 @@ function initializeDatabase() {
     `);
 
     // Best-effort migration for existing databases
-    db.run(`ALTER TABLE quizzes ADD COLUMN level TEXT`, () => {/* ignore if exists */});
+    db.run(`ALTER TABLE quizzes ADD COLUMN category TEXT`, (err) => {
+      if (err && !err.message.includes('duplicate column name')) {
+        console.error('Error adding category column:', err);
+      }
+    });
+    db.run(`ALTER TABLE quizzes ADD COLUMN level TEXT`, (err) => {
+      if (err && !err.message.includes('duplicate column name')) {
+        console.error('Error adding level column:', err);
+      }
+    });
 
     // Questions table
     db.run(`
@@ -48,9 +57,17 @@ function initializeDatabase() {
         option_c TEXT NOT NULL,
         option_d TEXT NOT NULL,
         correct_option TEXT NOT NULL CHECK(correct_option IN ('A', 'B', 'C', 'D')),
+        explanation TEXT,
         FOREIGN KEY (quiz_id) REFERENCES quizzes(id)
       )
     `);
+
+    // Add explanation column to existing questions table
+    db.run(`ALTER TABLE questions ADD COLUMN explanation TEXT`, (err) => {
+      if (err && !err.message.includes('duplicate column name')) {
+        console.error('Error adding explanation column:', err);
+      }
+    });
 
     // Users table
     db.run(`

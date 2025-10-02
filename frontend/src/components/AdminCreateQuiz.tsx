@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { quizApi } from '@/services/api/api.service';
 import { Button } from '@/components/ui/button';
+import { ThemeToggle } from '@/components/theme-toggle';
 
 export const AdminCreateQuiz = () => {
   const [title, setTitle] = useState('');
@@ -37,19 +38,22 @@ export const AdminCreateQuiz = () => {
   return (
     <div className="min-h-screen bg-background text-foreground p-4 py-8">
       <div className="max-w-3xl mx-auto space-y-6">
-        <h1 className="text-2xl font-bold">Create Quiz</h1>
+        <div className="flex justify-between items-center">
+          <h1 className="text-2xl font-bold">Create Quiz</h1>
+          <ThemeToggle />
+        </div>
         {msg && <p className="text-sm text-muted-foreground">{msg}</p>}
         <div className="grid gap-3">
-          <input className="border rounded px-3 py-2" placeholder="Title" value={title} onChange={(e)=>setTitle(e.target.value)} />
-          <input className="border rounded px-3 py-2" placeholder="Description" value={description} onChange={(e)=>setDescription(e.target.value)} />
+          <input className="border border-input rounded px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring" placeholder="Title" value={title} onChange={(e)=>setTitle(e.target.value)} />
+          <input className="border border-input rounded px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring" placeholder="Description" value={description} onChange={(e)=>setDescription(e.target.value)} />
           <div className="grid grid-cols-2 gap-3">
-            <select className="border rounded px-3 py-2" value={category} onChange={(e)=>setCategory(e.target.value)}>
+            <select className="border border-input rounded px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring" value={category} onChange={(e)=>setCategory(e.target.value)}>
               <option value="javascript">JavaScript</option>
               <option value="typescript">TypeScript</option>
               <option value="react">React</option>
               <option value="next">Next</option>
             </select>
-            <select className="border rounded px-3 py-2" value={level} onChange={(e)=>setLevel(e.target.value)}>
+            <select className="border border-input rounded px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring" value={level} onChange={(e)=>setLevel(e.target.value)}>
               <option value="basic">Basic</option>
               <option value="advanced">Advanced</option>
             </select>

@@ -146,23 +146,6 @@ const seedData = () => {
           { text: 'What runs on the server by default in App Router?', a: 'Client Components', b: 'Server Components', c: 'Both', d: 'Neither', correct: 'B' },
           { text: 'Which command creates a new Next app?', a: 'npx create-next-app', b: 'npm init next', c: 'next new', d: 'npx next-create', correct: 'A' },
         ];
-    // Advanced variants (short sets)
-    db.run(
-      `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
-      ['JavaScript Advanced', 'Advanced JavaScript patterns and internals', 'javascript', 'advanced']
-    );
-    db.run(
-      `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
-      ['TypeScript Advanced', 'Advanced typing and utilities', 'typescript', 'advanced']
-    );
-    db.run(
-      `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
-      ['React Advanced', 'Concurrent features and performance', 'react', 'advanced']
-    );
-    db.run(
-      `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
-      ['Next.js Advanced', 'Routing, data fetching, and optimization', 'next', 'advanced']
-    );
         const stmt = db.prepare(
           `INSERT INTO questions (quiz_id, question_text, option_a, option_b, option_c, option_d, correct_option) 
            VALUES (?, ?, ?, ?, ?, ?, ?)`
@@ -170,6 +153,43 @@ const seedData = () => {
         questions.forEach((q) => stmt.run(quizId, q.text, q.a, q.b, q.c, q.d, q.correct));
         stmt.finalize();
         console.log('Next.js quiz seeded.');
+      }
+    );
+
+    // Advanced variants (empty quizzes for now)
+    db.run(
+      `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
+      ['JavaScript Advanced', 'Advanced JavaScript patterns and internals', 'javascript', 'advanced'],
+      (err) => {
+        if (err) console.error('Error inserting JavaScript Advanced quiz:', err);
+        else console.log('JavaScript Advanced quiz created');
+      }
+    );
+    
+    db.run(
+      `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
+      ['TypeScript Advanced', 'Advanced typing and utilities', 'typescript', 'advanced'],
+      (err) => {
+        if (err) console.error('Error inserting TypeScript Advanced quiz:', err);
+        else console.log('TypeScript Advanced quiz created');
+      }
+    );
+    
+    db.run(
+      `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
+      ['React Advanced', 'Concurrent features and performance', 'react', 'advanced'],
+      (err) => {
+        if (err) console.error('Error inserting React Advanced quiz:', err);
+        else console.log('React Advanced quiz created');
+      }
+    );
+    
+    db.run(
+      `INSERT INTO quizzes (title, description, category, level) VALUES (?, ?, ?, ?)`,
+      ['Next.js Advanced', 'Routing, data fetching, and optimization', 'next', 'advanced'],
+      (err) => {
+        if (err) console.error('Error inserting Next.js Advanced quiz:', err);
+        else console.log('Next.js Advanced quiz created');
         console.log('Database seeded successfully!');
       }
     );

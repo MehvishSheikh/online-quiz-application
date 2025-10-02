@@ -11,5 +11,6 @@ router.get('/quizzes', QuizController.listQuizzes);
 router.get('/quiz/:quizId/leaderboard', QuizController.getLeaderboard);
 router.post('/quizzes', QuizController.createQuiz);
 router.post('/quizzes/:quizId/questions', QuizController.addQuestion);
+router.post('/ai-assessment/generate', QuizController.generateAIAssessment);
 
 export default router;

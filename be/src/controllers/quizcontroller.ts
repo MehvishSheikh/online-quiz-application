@@ -199,4 +199,58 @@ export class QuizController {
       res.status(500).json({ error: 'Failed to add question' });
     }
   }
+
+  /**
+   * POST /api/ai-assessment/generate
+   * Generate a quiz based on topic, difficulty, and question count using AI
+   */
+  static async generateAIAssessment(req: Request, res: Response) {
+    try {
+      const { topic, difficulty, questionCount } = req.body || {};
+      
+      if (!topic || !difficulty || !questionCount) {
+        res.status(400).json({ error: 'Topic, difficulty, and questionCount are required' });
+        return;
+      }
+
+      if (!['easy', 'medium', 'hard'].includes(difficulty)) {
+        res.status(400).json({ error: 'Invalid difficulty level' });
+        return;
+      }
+
+      if (questionCount < 5 || questionCount > 50) {
+        res.status(400).json({ error: 'Question count must be between 5 and 50' });
+        return;
+      }
+
+      let quizId: number;
+      let generationType: string = 'ai';
+
+      try {
+        // Try to generate quiz using AI first
+        quizId = await QuizService.generateAIQuiz(topic, difficulty, questionCount);
+      } catch (aiError) {
+        console.warn('AI generation failed, falling back to static questions:', aiError);
+        
+        try {
+          // Fallback to static questions
+          quizId = await QuizService.generateStaticQuiz(topic, difficulty, questionCount);
+          generationType = 'static';
+        } catch (staticError) {
+          console.error('Both AI and static generation failed:', staticError);
+          res.status(500).json({ error: 'Failed to generate quiz. Please try again later.' });
+          return;
+        }
+      }
+      
+      res.status(201).json({ 
+        quizId, 
+        message: `Quiz generated successfully using ${generationType} generation`,
+        generationType 
+      });
+    } catch (error) {
+      console.error('Error generating AI assessment:', error);
+      res.status(500).json({ error: 'Failed to generate quiz' });
+    }
+  }
 }
