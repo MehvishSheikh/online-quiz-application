@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { QuestionCard } from '@/components/QuestionsCards'; 
@@ -51,31 +51,11 @@ export const QuizPage = () => {
     };
 
     fetchQuestions();
-  }, [start, quizId]);
+  }, [quizId, navigate]); // REMOVED 'start' from dependencies
 
-  useEffect(() => {
-    if (timeLeft === 0 && questions.length > 0) {
-      handleSubmit();
-    }
-  }, [timeLeft, questions.length]);
-
-  const handleSelectOption = (option: 'A' | 'B' | 'C' | 'D') => {
-    setAnswers(new Map(answers.set(questions[currentIndex].id, option)));
-  };
-
-  const handleNext = () => {
-    if (currentIndex < questions.length - 1) {
-      setCurrentIndex(currentIndex + 1);
-    }
-  };
-
-  const handlePrevious = () => {
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1);
-    }
-  };
-
-  const handleSubmit = async () => {
+  const handleSubmit = useCallback(async () => {
+    if (submitting) return; // Prevent double submission
+    
     setSubmitting(true);
     try {
       const submissionAnswers: Answer[] = Array.from(answers.entries()).map(
@@ -92,6 +72,28 @@ export const QuizPage = () => {
     } catch (err) {
       setError('Failed to submit quiz. Please try again.');
       setSubmitting(false);
+    }
+  }, [answers, quizId, navigate, submitting]);
+
+  useEffect(() => {
+    if (timeLeft === 0 && questions.length > 0 && !submitting) {
+      handleSubmit();
+    }
+  }, [timeLeft, questions.length, handleSubmit, submitting]);
+
+  const handleSelectOption = (option: 'A' | 'B' | 'C' | 'D') => {
+    setAnswers(new Map(answers.set(questions[currentIndex].id, option)));
+  };
+
+  const handleNext = () => {
+    if (currentIndex < questions.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
+
+  const handlePrevious = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
     }
   };
 
@@ -246,4 +248,3 @@ export const QuizPage = () => {
     </div>
   );
 };
-

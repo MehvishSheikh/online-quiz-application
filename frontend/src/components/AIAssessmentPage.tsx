@@ -82,33 +82,51 @@ export const AIAssessmentPage = () => {
     if (!validateForm()) return;
 
     setIsGenerating(true);
+    setErrors({}); // Clear previous errors
+    
+    const requestData = {
+      topic: config.topic,
+      difficulty: config.difficulty,
+      questionCount: config.questionCount
+    };
+    
+    console.log('🚀 Starting quiz generation...');
+    console.log('📊 Request data:', requestData);
+    console.log('🔗 API URL: http://localhost:3000/api/ai-assessment/generate');
     
     try {
       // Call API to generate quiz
-      const response = await fetch('http://localhost:3001/api/ai-assessment/generate', {
+      const response = await fetch('http://localhost:3000/api/ai-assessment/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          topic: config.topic,
-          difficulty: config.difficulty,
-          questionCount: config.questionCount
-        }),
+        body: JSON.stringify(requestData),
       });
+
+      console.log('📡 Response status:', response.status);
+      console.log('📡 Response ok:', response.ok);
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
+        console.error('❌ API Error:', errorData);
         throw new Error(errorData.error || 'Failed to generate quiz');
       }
 
       const data = await response.json();
+      console.log('✅ API Response:', data);
       
       // Navigate to the quiz page with the generated quiz ID
+      console.log('🔄 Navigating to quiz:', data.quizId);
       navigate(`/quiz/${data.quizId}`);
     } catch (error) {
-      console.error('Error generating quiz:', error);
-      setErrors({ general: error instanceof Error ? error.message : 'Failed to generate quiz. Please try again.' });
+      console.error('❌ Error generating quiz:', error);
+      
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        setErrors({ general: 'Cannot connect to server. Please make sure the backend is running on port 3001.' });
+      } else {
+        setErrors({ general: error instanceof Error ? error.message : 'Failed to generate quiz. Please try again.' });
+      }
     } finally {
       setIsGenerating(false);
     }

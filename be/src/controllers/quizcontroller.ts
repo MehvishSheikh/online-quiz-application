@@ -205,51 +205,69 @@ export class QuizController {
    * Generate a quiz based on topic, difficulty, and question count using AI
    */
   static async generateAIAssessment(req: Request, res: Response) {
+    console.log('🚀 AI Assessment endpoint called');
+    console.log('📝 Request body:', req.body);
+    console.log('📡 Request headers:', req.headers);
+    
     try {
       const { topic, difficulty, questionCount } = req.body || {};
       
+      console.log(`📊 Received parameters - Topic: ${topic}, Difficulty: ${difficulty}, Questions: ${questionCount}`);
+      
       if (!topic || !difficulty || !questionCount) {
+        console.log('❌ Missing required parameters');
         res.status(400).json({ error: 'Topic, difficulty, and questionCount are required' });
         return;
       }
 
       if (!['easy', 'medium', 'hard'].includes(difficulty)) {
+        console.log('❌ Invalid difficulty level:', difficulty);
         res.status(400).json({ error: 'Invalid difficulty level' });
         return;
       }
 
       if (questionCount < 5 || questionCount > 50) {
+        console.log('❌ Invalid question count:', questionCount);
         res.status(400).json({ error: 'Question count must be between 5 and 50' });
         return;
       }
 
+      console.log('✅ All parameters validated successfully');
+      
       let quizId: number;
       let generationType: string = 'ai';
 
       try {
+        console.log('🤖 Attempting AI quiz generation...');
         // Try to generate quiz using AI first
         quizId = await QuizService.generateAIQuiz(topic, difficulty, questionCount);
+        console.log('✅ AI quiz generation successful, Quiz ID:', quizId);
       } catch (aiError) {
-        console.warn('AI generation failed, falling back to static questions:', aiError);
+        console.warn('⚠️ AI generation failed, falling back to static questions:', aiError);
         
         try {
+          console.log('📚 Attempting static quiz generation...');
           // Fallback to static questions
           quizId = await QuizService.generateStaticQuiz(topic, difficulty, questionCount);
           generationType = 'static';
+          console.log('✅ Static quiz generation successful, Quiz ID:', quizId);
         } catch (staticError) {
-          console.error('Both AI and static generation failed:', staticError);
+          console.error('❌ Both AI and static generation failed:', staticError);
           res.status(500).json({ error: 'Failed to generate quiz. Please try again later.' });
           return;
         }
       }
       
-      res.status(201).json({ 
+      const response = { 
         quizId, 
         message: `Quiz generated successfully using ${generationType} generation`,
         generationType 
-      });
+      };
+      
+      console.log('📤 Sending response:', response);
+      res.status(201).json(response);
     } catch (error) {
-      console.error('Error generating AI assessment:', error);
+      console.error('❌ Unexpected error in AI assessment generation:', error);
       res.status(500).json({ error: 'Failed to generate quiz' });
     }
   }

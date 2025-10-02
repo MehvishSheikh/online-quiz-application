@@ -3,11 +3,31 @@ import { type Question, type Answer, type QuizResult, type UserInfo, type Attemp
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
+console.log('🔗 Environment Variables:');
+console.log('  - VITE_API_URL:', import.meta.env.VITE_API_URL);
+console.log('  - Final API_BASE_URL:', API_BASE_URL);
+
 export const quizApi = {
   // Fetch all questions for a quiz
   getQuestions: async (quizId: number): Promise<Question[]> => {
-    const response = await axios.get(`${API_BASE_URL}/quiz/${quizId}/questions`);
-    return response.data.questions;
+    const url = `${API_BASE_URL}/quiz/${quizId}/questions`;
+    console.log('📥 Fetching questions from:', url);
+    try {
+      const response = await axios.get(url);
+      console.log('✅ Questions fetched successfully:', response.data.questions?.length || 0, 'questions');
+      return response.data.questions;
+    } catch (error) {
+      console.error('❌ Failed to fetch questions:', error);
+      if (axios.isAxiosError(error)) {
+        console.error('❌ Axios error details:', {
+          status: error.response?.status,
+          statusText: error.response?.statusText,
+          data: error.response?.data,
+          message: error.message
+        });
+      }
+      throw error;
+    }
   },
 
   // Submit quiz answers
