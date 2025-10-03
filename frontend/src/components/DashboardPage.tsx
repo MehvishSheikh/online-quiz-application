@@ -35,7 +35,13 @@ export const DashboardPage = () => {
 
   return (
     <AIPageShell title="Dashboard">
-      <div className="max-w-7xl">
+      <div className="max-w-7xl nebula-wrap">
+        <div className="nebula-bg">
+          <div className="nebula-clouds"></div>
+          <div className="nebula-stars"></div>
+          <div className="nebula-stars-2"></div>
+          <div className="nebula-stars-3"></div>
+        </div>
         {/* Header removed; AIPageShell header is used globally */}
 
         {/* Welcome Section */}

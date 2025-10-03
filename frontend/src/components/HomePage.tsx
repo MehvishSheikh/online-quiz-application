@@ -31,15 +31,21 @@ export const HomePage = () => {
   };
 
   return (
-    <div className="min-h-screen ai-gradient-bg text-foreground">
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen ai-gradient-bg text-foreground nebula-wrap">
+      <div className="nebula-bg">
+        <div className="nebula-clouds"></div>
+        <div className="nebula-stars"></div>
+        <div className="nebula-stars-2"></div>
+        <div className="nebula-stars-3"></div>
+      </div>
+      <div className="max-w-7xl mx-auto relative">
         {/* Header */}
         <div className="flex justify-between items-center p-4 lg:p-6">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg ai-button-gradient flex items-center justify-center shadow-lg ai-pulse">
               <Brain className="w-5 h-5 text-white" />
             </div>
-            <span className="text-xl font-bold ai-text-gradient">QuizNova AI</span>
+            <span className="text-xl font-bold ai-text-gradient">Nebula AI Quiz</span>
           </div>
           <ThemeToggle />
         </div>
@@ -53,7 +59,7 @@ export const HomePage = () => {
             <Zap className="w-4 h-4 text-primary" />
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3">
-            Master <span className="ai-text-gradient">Any Technology</span> with AI
+            Explore the <span className="ai-text-gradient">Nebula of Knowledge</span> with AI
           </h1>
           <p className="text-lg lg:text-xl text-muted-foreground mb-6 max-w-3xl mx-auto">
             Experience the future of learning with AI-generated quizzes, personalized assessments, and intelligent feedback on any topic you choose

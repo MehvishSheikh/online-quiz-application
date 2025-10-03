@@ -51,7 +51,7 @@ export function AISidebar({ collapsed }: { collapsed: boolean }) {
         <div className="w-8 h-8 ai-button-gradient ai-rounded-lg flex items-center justify-center shadow-lg">
           <Brain className="w-5 h-5 text-white" />
         </div>
-        {!collapsed && <div className="ml-2 ai-text-gradient p-1 font-bold text-xl">QuizNova AI</div>}
+        {!collapsed && <div className="ml-2 ai-text-gradient p-1 font-bold text-xl">Nebula AI Quiz</div>}
       </div>
       <div className="mx-3 my-2 border-t border-white/40 dark:border-white/10" />
 
@@ -155,7 +155,7 @@ export function AIPageShell({ children, title }: { children: React.ReactNode; ti
       </header>
       <main className="p-4 md:p-6 transition-all duration-200" style={{ marginLeft: ml, marginRight: 0 }}>
         <div className="mb-4 text-sm text-muted-foreground flex items-center gap-2">
-          <span>QuizNova</span>
+          <span>Nebula AI Quiz</span>
           <span>/</span>
           <span className="text-foreground font-medium">{title}</span>
         </div>
