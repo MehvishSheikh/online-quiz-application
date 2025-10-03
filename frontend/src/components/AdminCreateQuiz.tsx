@@ -10,6 +10,7 @@ export const AdminCreateQuiz = () => {
   const [category, setCategory] = useState('javascript');
   const [level, setLevel] = useState('basic');
   const [msg, setMsg] = useState<string | null>(null);
+  const [isCreating, setIsCreating] = useState(false);
 
   const [question, setQuestion] = useState({
     question_text: '', option_a: '', option_b: '', option_c: '', option_d: '', correct_option: 'A' as 'A'|'B'|'C'|'D'
@@ -19,13 +20,20 @@ export const AdminCreateQuiz = () => {
 
   const createQuiz = async () => {
     if (!title.trim()) { setMsg('Please provide a title'); return; }
-    const res = await quizApi.createQuiz({ title, description, category, level });
-    setMsg('Quiz created. Adding questions...');
-    // add all prepared questions
-    for (const q of questionList) {
-      await quizApi.addQuestion(res.id, q);
+    try {
+      setIsCreating(true);
+      setMsg('Creating quiz...');
+      const res = await quizApi.createQuiz({ title, description, category, level });
+      setMsg('Quiz created. Adding questions...');
+      for (const q of questionList) {
+        await quizApi.addQuestion(res.id, q);
+      }
+      setMsg('Stored successfully! Access the quiz from the dashboard.');
+    } catch (error) {
+      setMsg('Failed to store quiz. Please try again.');
+    } finally {
+      setIsCreating(false);
     }
-    setMsg(`Quiz ready! ${questionList.length} question(s) added.`);
   };
 
   const addQuestion = async () => {
@@ -40,7 +48,11 @@ export const AdminCreateQuiz = () => {
         <div className="flex justify-end items-center">
           <ThemeToggle />
         </div>
-        {msg && <p className="text-sm text-muted-foreground">{msg}</p>}
+        {msg && (
+          <div className="text-sm px-3 py-2 ai-rounded-md border bg-card ai-glass">
+            {msg}
+          </div>
+        )}
         <div className="grid gap-3 ai-card-glow ai-rounded-xl p-4 border bg-card ai-glass">
           <input className="border border-input ai-rounded-md px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Title" value={title} onChange={(e)=>setTitle(e.target.value)} />
           <input className="border border-input ai-rounded-md px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Description" value={description} onChange={(e)=>setDescription(e.target.value)} />
@@ -84,8 +96,21 @@ export const AdminCreateQuiz = () => {
 
         {/* Finalize create only after questions are staged */}
         <div className="pt-2">
-          <Button disabled={questionList.length === 0} onClick={createQuiz}>
-            {questionList.length === 0 ? 'Add questions to enable Create' : 'Create Quiz with Questions'}
+          <Button
+            disabled={questionList.length === 0 || isCreating}
+            onClick={createQuiz}
+            className={`${isCreating ? 'bg-red-600 hover:bg-red-600 cursor-not-allowed text-white' : ''}`}
+          >
+            {questionList.length === 0 ? (
+              'Add questions to enable Create'
+            ) : isCreating ? (
+              <span className="flex items-center gap-2">
+                <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>
+                Creating — kindly wait… do not close
+              </span>
+            ) : (
+              'Create Quiz with Questions'
+            )}
           </Button>
         </div>
       </div>
