@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ArrowLeft, Brain, BookOpen, Clock, Target, Sparkles, Zap } from 'lucide-react';
+import { ArrowLeft, Brain, Clock, Target, Sparkles, Zap } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 
 interface AssessmentConfig {
@@ -92,11 +92,11 @@ export const AIAssessmentPage = () => {
     
     console.log('🚀 Starting quiz generation...');
     console.log('📊 Request data:', requestData);
-    console.log('🔗 API URL: http://localhost:3000/api/ai-assessment/generate');
+    console.log('🔗 API URL: http://localhost:3001/api/ai-assessment/generate');
     
     try {
       // Call API to generate quiz
-      const response = await fetch('http://localhost:3000/api/ai-assessment/generate', {
+      const response = await fetch('http://localhost:3001/api/ai-assessment/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -133,8 +133,8 @@ export const AIAssessmentPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-primary/10">
-      <div className="max-w-6xl mx-auto p-6">
+    <div className="min-h-screen ai-gradient-bg">
+      <div className="max-w-7xl mx-auto p-6">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-4">
@@ -160,13 +160,15 @@ export const AIAssessmentPage = () => {
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
           {/* Configuration Panel */}
-          <div className="lg:col-span-3 space-y-6">
-            <Card className="p-8">
+          <div className="xl:col-span-3 space-y-6">
+            <Card className="p-8 ai-card-glow">
               <div className="flex items-center gap-3 mb-8">
-                <BookOpen className="w-6 h-6 text-primary" />
-                <h2 className="text-2xl font-bold">Create Your Assessment</h2>
+                <div className="w-8 h-8 ai-button-gradient rounded-lg flex items-center justify-center">
+                  <Brain className="w-5 h-5 text-white" />
+                </div>
+                <h2 className="text-2xl font-bold ai-text-gradient">Create Your AI Assessment</h2>
               </div>
 
               {/* Topic Selection */}
@@ -281,7 +283,7 @@ export const AIAssessmentPage = () => {
                 <Button
                   onClick={handleGenerateQuiz}
                   disabled={isGenerating}
-                  className="w-full py-4 text-lg font-medium bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-700 hover:to-purple-600 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
+                  className="w-full py-4 text-lg font-medium ai-button-gradient text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
                   size="lg"
                 >
                   {isGenerating ? (
@@ -303,7 +305,7 @@ export const AIAssessmentPage = () => {
 
           {/* Summary Panel */}
           <div className="space-y-6">
-            <Card className="p-6">
+            <Card className="p-6 ai-card-glow">
               <div className="flex items-center gap-3 mb-6">
                 <Clock className="w-5 h-5 text-primary" />
                 <h3 className="text-lg font-semibold">Summary</h3>

@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { type Question, type Answer, type QuizResult, type UserInfo, type AttemptRecord } from '../../types/quiz.types';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001/api';
 
 console.log('🔗 Environment Variables:');
 console.log('  - VITE_API_URL:', import.meta.env.VITE_API_URL);

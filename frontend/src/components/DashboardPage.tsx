@@ -29,15 +29,15 @@ export const DashboardPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-primary/10 text-foreground">
+    <div className="min-h-screen ai-gradient-bg text-foreground">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 lg:p-6 border-b border-border/50 bg-card/50 backdrop-blur-sm">
+        <div className="flex items-center justify-between p-4 lg:p-6 border-b border-border/50 bg-card/50 backdrop-blur-sm ai-card-glow">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg">
-              <BookOpen className="w-5 h-5 text-primary-foreground" />
+            <div className="w-9 h-9 rounded-lg ai-button-gradient flex items-center justify-center shadow-lg ai-pulse">
+              <Brain className="w-5 h-5 text-white" />
             </div>
-            <h1 className="text-2xl font-extrabold tracking-tight bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">QuizNova</h1>
+            <h1 className="text-2xl font-extrabold tracking-tight ai-text-gradient">QuizNova AI</h1>
           </div>
           <div className="flex items-center gap-3">
             <nav className="hidden sm:flex items-center gap-2">
@@ -74,23 +74,23 @@ export const DashboardPage = () => {
 
         {/* AI Assessment Banner */}
         <div className="p-4 lg:p-6 border-b">
-          <div className="bg-gradient-to-r from-purple-500/10 via-purple-500/5 to-primary/10 border border-purple-200/20 dark:border-purple-800/30 rounded-xl p-6">
+          <div className="ai-card-glow border border-primary/20 rounded-xl p-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg">
+                <div className="w-12 h-12 rounded-lg ai-button-gradient flex items-center justify-center shadow-lg ai-pulse">
                   <Brain className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold flex items-center gap-2">
+                  <h3 className="text-xl font-bold flex items-center gap-2 ai-text-gradient">
                     AI Assessment
-                    <Sparkles className="w-5 h-5 text-purple-500" />
+                    <Sparkles className="w-5 h-5 text-primary ai-pulse" />
                   </h3>
                   <p className="text-muted-foreground">Create personalized quizzes on any topic with AI</p>
                 </div>
               </div>
               <Button 
                 onClick={() => navigate('/ai-assessment')}
-                className="bg-gradient-to-r from-purple-600 to-purple-500 hover:from-purple-700 hover:to-purple-600 shadow-lg hover:shadow-xl transition-all duration-200"
+                className="ai-button-gradient text-white shadow-lg hover:shadow-xl transition-all duration-200"
               >
                 Try AI Assessment
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -165,11 +165,11 @@ export const DashboardPage = () => {
                 </div>
 
                 {/* Available Quiz */}
-                <div className="bg-card border rounded-xl p-6">
+                <div className="bg-card border rounded-xl p-6 ai-card-glow">
                   <h4 className="font-semibold mb-4">Ready to Start?</h4>
                   {quizzes[0] ? (
                     <div className="space-y-4">
-                      <div className="p-4 bg-muted/30 rounded-lg">
+                      <div className="p-4 bg-muted/30 rounded-lg ai-card-glow">
                         <h5 className="font-medium mb-1">{quizzes[0].title}</h5>
                         <p className="text-sm text-muted-foreground mb-3">{quizzes[0].description}</p>
                         <div className="flex items-center gap-4 text-xs text-muted-foreground">
@@ -186,7 +186,7 @@ export const DashboardPage = () => {
                       <Button 
                         size="lg" 
                         onClick={start}
-                        className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all duration-200"
+                        className="w-full ai-button-gradient text-white shadow-lg hover:shadow-xl transition-all duration-200"
                       >
                         <Play className="w-4 h-4 mr-2" />
                         Start Quiz Now
@@ -206,15 +206,15 @@ export const DashboardPage = () => {
 
             {/* Sidebar */}
             <div className="space-y-6">
-              <div className="bg-card border rounded-xl p-6">
+              <div className="bg-card border rounded-xl p-6 ai-card-glow">
                 <h4 className="font-semibold mb-4">Quick Actions</h4>
                 <div className="space-y-3">
                   <Button 
                     variant="outline" 
-                    className="w-full justify-start border-purple-200 dark:border-purple-800 hover:bg-purple-50 dark:hover:bg-purple-950" 
+                    className="w-full justify-start border-primary/20 hover:bg-primary/10 hover:border-primary/40" 
                     onClick={()=>navigate('/ai-assessment')}
                   >
-                    <Brain className="w-4 h-4 mr-3 text-purple-500" />
+                    <Brain className="w-4 h-4 mr-3 text-primary" />
                     AI Assessment
                   </Button>
                   <Button variant="outline" className="w-full justify-start" onClick={()=>navigate('/history')}>

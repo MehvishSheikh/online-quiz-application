@@ -29,7 +29,7 @@ export class GeminiService {
           temperature: 0.7,
           topK: 40,
           topP: 0.95,
-          maxOutputTokens: 26384, // Increased from 8192
+          maxOutputTokens: 8192,
         }
       });
       
@@ -52,19 +52,13 @@ export class GeminiService {
       
       cleanedText = cleanedText.trim();
       
-      // Check if response looks incomplete (common signs)
-      if (!cleanedText.endsWith('}') && !cleanedText.endsWith(']')) {
-        console.error('AI response appears truncated:', cleanedText.slice(-200));
-        throw new Error('AI response was truncated - try requesting fewer questions');
-      }
-      
       // Parse the JSON response
       let parsedResponse;
       try {
         parsedResponse = JSON.parse(cleanedText);
       } catch (parseError) {
-        console.error('Failed to parse AI response as JSON. Last 500 chars:', cleanedText.slice(-500));
-        throw new Error('Invalid JSON response from AI - response may be truncated');
+        console.error('Failed to parse AI response as JSON:', cleanedText);
+        throw new Error('Invalid JSON response from AI');
       }
       
       // Validate the response using Zod
@@ -98,10 +92,9 @@ IMPORTANT REQUIREMENTS:
 1. Each question should test ${difficultyDescriptions[request.difficulty]}
 2. Provide exactly 4 options (A, B, C, D) for each question
 3. Only ONE option should be correct
-4. Keep explanations brief and concise (2-3 sentences maximum)
+4. Include a clear explanation for why the correct answer is right
 5. Make questions practical and relevant to real-world scenarios
 6. Avoid trick questions or overly ambiguous wording
-7. Keep question text and options short and clear
 
 RESPONSE FORMAT (JSON ONLY):
 {
@@ -115,7 +108,7 @@ RESPONSE FORMAT (JSON ONLY):
         "D": "Fourth option"
       },
       "correct_answer": "A",
-      "explanation": "Brief explanation (2-3 sentences)"
+      "explanation": "Detailed explanation of why this answer is correct and others are wrong"
     }
   ]
 }
@@ -124,12 +117,7 @@ Topic: ${request.topic}
 Difficulty: ${request.difficulty}
 Number of questions: ${request.questionCount}
 
-CRITICAL INSTRUCTIONS:
-- Return ONLY valid JSON
-- Do NOT wrap in markdown code blocks
-- Keep ALL text concise to avoid truncation
-- Ensure the JSON is complete and properly closed
-- Limit explanation length to prevent response cutoff`;
+CRITICAL: Return ONLY the raw JSON object. Do NOT wrap it in markdown code blocks or backticks. Do NOT include any text before or after the JSON.`;
   }
 }
 
