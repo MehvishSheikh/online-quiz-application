@@ -14,7 +14,7 @@ const AppRoutes: React.FC = () => {
   return (
     <Routes>
       {/* add routers according to my components */}
-      <Route path="/" element={<Navigate to="/home" />} />
+      <Route path="/" element={<HomePage/>} />
       <Route path="/home" element={<HomePage/>} />
       <Route path="/dashboard" element={<DashboardPage/>} />
       <Route path="/ai-assessment" element={<AIAssessmentPage/>} />
