@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ArrowLeft, Brain, Clock, Target, Sparkles, Zap } from 'lucide-react';
+import { ArrowLeft, Brain, Clock, Target, Sparkles, Zap, Send, Loader2, Search, CheckCircle2, Database, ArrowRight } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { AIPageShell } from '@/components/AISidebar';
 
@@ -21,6 +21,8 @@ export const AIAssessmentPage = () => {
   });
   const [isGenerating, setIsGenerating] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
+  const [countdown, setCountdown] = useState(30);
+  const [messageIndex, setMessageIndex] = useState(0);
   const API_BASE_URL = import.meta.env.VITE_API_URL
   const topics = [
     'JavaScript Fundamentals',
@@ -94,6 +96,8 @@ export const AIAssessmentPage = () => {
 
     setIsGenerating(true);
     setErrors({}); // Clear previous errors
+    setCountdown(30);
+    setMessageIndex(0);
     
     const requestData = {
       topic: config.topic,
@@ -142,6 +146,38 @@ export const AIAssessmentPage = () => {
       setIsGenerating(false);
     }
   };
+
+  // Progress messages shown in the processing dialog
+  const progressSteps: { label: string; icon: ReactNode }[] = [
+    { label: 'Processing Request ...', icon: <Loader2 className="w-5 h-5 animate-spin text-primary" /> },
+    { label: 'Sending to Nebula AI ...', icon: <Send className="w-5 h-5 text-blue-500" /> },
+    { label: 'Gathering information on Topic ...', icon: <Search className="w-5 h-5 text-emerald-500" /> },
+    { label: 'Generating the questions ...', icon: <Sparkles className="w-5 h-5 text-purple-500" /> },
+    { label: 'Questions Generated .....', icon: <CheckCircle2 className="w-5 h-5 text-green-500" /> },
+    { label: 'Storing to the db ....', icon: <Database className="w-5 h-5 text-amber-500" /> },
+    { label: 'Redirecting to the quiz ...', icon: <ArrowRight className="w-5 h-5 text-pink-500" /> },
+  ];
+
+  // Drive the 20s countdown and 3s step progression while generating
+  useEffect(() => {
+    if (!isGenerating) return;
+
+    setCountdown(30);
+    setMessageIndex(0);
+
+    const oneSecond = setInterval(() => {
+      setCountdown((c) => (c > 0 ? c - 1 : 0));
+    }, 1000);
+
+    const threeSeconds = setInterval(() => {
+      setMessageIndex((i) => (i < progressSteps.length - 1 ? i + 1 : i));
+    }, 5000);
+
+    return () => {
+      clearInterval(oneSecond);
+      clearInterval(threeSeconds);
+    };
+  }, [isGenerating]);
 
   return (
     <AIPageShell title="AI Assessment">
@@ -294,13 +330,20 @@ export const AIAssessmentPage = () => {
                 <Button
                   onClick={handleGenerateQuiz}
                   disabled={isGenerating}
-                  className="w-full py-4 text-lg font-medium ai-button-gradient text-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02]"
+                  className={`w-full py-4 text-lg font-medium text-white shadow-lg transition-all duration-300 transform hover:scale-[1.02] ${
+                    isGenerating
+                      ? 'bg-red-600 hover:bg-red-600 cursor-not-allowed'
+                      : 'ai-button-gradient hover:shadow-xl'
+                  }`}
                   size="lg"
                 >
                   {isGenerating ? (
-                    <div className="flex items-center gap-3">
-                      <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      <span>Generating Assessment...</span>
+                    <div className="flex flex-col items-center gap-1">
+                      <div className="flex items-center gap-3">
+                        <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+                        <span>Generating — kindly wait… do not close</span>
+                      </div>
+                      <span className="text-xs opacity-90">Time remaining: {countdown}s</span>
                     </div>
                   ) : (
                     <div className="flex items-center gap-3">
@@ -353,6 +396,56 @@ export const AIAssessmentPage = () => {
           </div>
         </div>
       </div>
+      {/* Full-screen blocking overlay while generating */}
+      {isGenerating && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center">
+          {/* Backdrop that blurs and blocks clicks */}
+          <div className="absolute inset-0 bg-background/60 backdrop-blur-sm pointer-events-auto"></div>
+
+          {/* Dialog */}
+          <div
+            role="dialog"
+            aria-modal="true"
+            className="relative z-10 w-full max-w-md mx-4 ai-glass ai-card-glow border border-border rounded-2xl p-6 bg-card/90 shadow-2xl"
+          >
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow">
+                <Brain className="w-5 h-5 text-white" />
+              </div>
+              <h3 className="text-xl font-semibold">Processing your AI assessment</h3>
+            </div>
+
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2 text-muted-foreground">
+                <Clock className="w-4 h-4" />
+                <span className="text-sm">Estimated time</span>
+              </div>
+              <div className="flex items-center gap-2 font-medium">
+                <div className="w-4 h-4 border-2 border-muted-foreground/40 border-t-primary rounded-full animate-spin"></div>
+                <span>{countdown}s</span>
+              </div>
+            </div>
+
+            <div className="rounded-xl border border-border bg-background/60 p-4">
+              <div className="flex items-start gap-3">
+                {progressSteps[messageIndex]?.icon}
+                <div className="flex-1">
+                  <p className="font-medium">
+                    {progressSteps[messageIndex]?.label}
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-1">Please keep this tab open while we prepare your quiz.</p>
+                </div>
+              </div>
+              <div className="mt-4 h-2 w-full bg-muted rounded-full overflow-hidden">
+                <div
+                  className="h-full bg-primary transition-all"
+                  style={{ width: `${((messageIndex + 1) / progressSteps.length) * 100}%` }}
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </AIPageShell>
   );
 };
