@@ -71,9 +71,9 @@ export const HistoryPage = () => {
           <CardHeader>
             <div className="flex items-center justify-between gap-3">
               <CardTitle>Your Quiz History</CardTitle>
-              <div className="flex items-center gap-2">
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                 <input
-                  className="hidden md:block w-64 px-3 py-2 border ai-rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+                  className="w-full sm:w-64 px-3 py-2 border ai-rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary mobile-input"
                   placeholder="Enter email to view history"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -92,6 +92,7 @@ export const HistoryPage = () => {
                       .catch(() => setError('Failed to load history.'))
                       .finally(() => setLoading(false));
                   }}
+                  className="mobile-button-full sm:w-auto"
                 >
                   Refresh
                 </Button>
@@ -129,13 +130,13 @@ export const HistoryPage = () => {
             )}
           </CardContent>
         </Card>
-        <div className="flex justify-between items-center">
-          <div className="text-sm text-muted-foreground">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+          <div className="text-xs sm:text-sm text-muted-foreground">
             {username && email ? (<span>Signed in as <span className="font-medium">{username}</span> ({email})</span>) : null}
           </div>
-          <div className="space-x-2">
-            <Button variant="outline" onClick={() => navigate('/home')}>Home</Button>
-            <Button onClick={() => navigate('/dashboard')}>Go to Dashboard</Button>
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+            <Button variant="outline" onClick={() => navigate('/home')} className="mobile-button-full sm:w-auto">Home</Button>
+            <Button onClick={() => navigate('/dashboard')} className="mobile-button-full sm:w-auto">Go to Dashboard</Button>
           </div>
         </div>
       </div>

@@ -117,6 +117,43 @@
   body {
     @apply bg-background text-foreground;
   }
+  
+  /* Mobile-first responsive improvements */
+  @media (max-width: 640px) {
+    html {
+      font-size: 14px; /* Slightly smaller base font for mobile */
+    }
+    
+    /* Improve touch targets */
+    button, input, select, textarea {
+      min-height: 44px; /* iOS recommended touch target size */
+    }
+    
+    /* Better spacing for mobile */
+    .space-y-6 > * + * {
+      margin-top: 1rem;
+    }
+    
+    .space-y-4 > * + * {
+      margin-top: 0.75rem;
+    }
+    
+    /* Improve text readability on mobile */
+    h1, h2, h3, h4, h5, h6 {
+      line-height: 1.3;
+    }
+    
+    p {
+      line-height: 1.5;
+    }
+  }
+  
+  /* Tablet improvements */
+  @media (min-width: 641px) and (max-width: 1024px) {
+    html {
+      font-size: 15px;
+    }
+  }
 }
 
 /* AI Futuristic Gradients and Effects */
@@ -391,5 +428,85 @@
     height: 2.5rem;
     border-radius: 0.5rem;
     margin-top: 1rem;
+  }
+  
+  /* Mobile-specific utilities */
+  .mobile-padding {
+    padding: 1rem;
+  }
+  
+  .mobile-text-sm {
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+  
+  .mobile-text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
+  }
+  
+  /* Mobile grid improvements */
+  .mobile-grid-1 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  
+  .mobile-grid-2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+  
+  /* Mobile button improvements */
+  .mobile-button-full {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+  }
+  
+  /* Mobile card improvements */
+  .mobile-card {
+    border-radius: 0.75rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  /* Mobile navigation improvements */
+  .mobile-nav-item {
+    min-height: 44px;
+    padding: 0.75rem 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  /* Mobile form improvements */
+  .mobile-input {
+    width: 100%;
+    min-height: 44px;
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+  }
+  
+  /* Mobile table improvements */
+  .mobile-table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  
+  .mobile-table-row {
+    display: flex;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border);
+  }
+  
+  .mobile-table-cell {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 }

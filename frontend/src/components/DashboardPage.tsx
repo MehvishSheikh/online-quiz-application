@@ -46,38 +46,38 @@ export const DashboardPage = () => {
 
         {/* Welcome Section */}
         {user && (
-          <div className="p-4 lg:p-6 border-b">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
-                <User className="w-5 h-5 text-primary" />
+          <div className="p-3 sm:p-4 lg:p-6 border-b">
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-primary/10 flex items-center justify-center">
+                <User className="w-4 h-4 sm:w-5 sm:h-5 text-primary" />
               </div>
               <div>
-                <h2 className="text-xl font-semibold">Welcome back, {user.username}!</h2>
-                <p className="text-muted-foreground text-sm">Ready for your next challenge?</p>
+                <h2 className="text-lg sm:text-xl font-semibold">Welcome back, {user.username}!</h2>
+                <p className="text-muted-foreground text-xs sm:text-sm">Ready for your next challenge?</p>
               </div>
             </div>
           </div>
         )}
 
         {/* AI Assessment Banner */}
-        <div className="p-4 lg:p-6 border-b">
-          <div className="ai-card-glow ai-glass border border-primary/20 rounded-xl p-6">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-lg ai-button-gradient flex items-center justify-center shadow-lg ai-pulse">
-                  <Brain className="w-6 h-6 text-white" />
+        <div className="p-3 sm:p-4 lg:p-6 border-b">
+          <div className="ai-card-glow ai-glass border border-primary/20 rounded-xl p-4 sm:p-6">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-0">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg ai-button-gradient flex items-center justify-center shadow-lg ai-pulse">
+                  <Brain className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold flex items-center gap-2 ai-text-gradient">
+                  <h3 className="text-lg sm:text-xl font-bold flex items-center gap-1 sm:gap-2 ai-text-gradient">
                     AI Assessment
-                    <Sparkles className="w-5 h-5 text-primary ai-pulse" />
+                    <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-primary ai-pulse" />
                   </h3>
-                  <p className="text-muted-foreground">Create personalized quizzes on any topic with AI</p>
+                  <p className="text-xs sm:text-sm sm:text-base text-muted-foreground">Create personalized quizzes on any topic with AI</p>
                 </div>
               </div>
               <Button 
                 onClick={() => navigate('/ai-assessment')}
-                className="ai-button-gradient text-white shadow-lg hover:shadow-xl transition-all duration-200"
+                className="w-full sm:w-auto ai-button-gradient text-white shadow-lg hover:shadow-xl transition-all duration-200 mobile-button-full"
               >
                 Try AI Assessment
                 <ArrowRight className="w-4 h-4 ml-2" />
@@ -87,17 +87,17 @@ export const DashboardPage = () => {
         </div>
 
         {/* Main Content */}
-        <div className="p-4 lg:p-6">
-          <div className="grid grid-cols-1 2xl:grid-cols-2 gap-6 lg:gap-8">
+        <div className="p-3 sm:p-4 lg:p-6">
+          <div className="grid grid-cols-1 2xl:grid-cols-2 gap-4 sm:gap-6 lg:gap-8">
             {/* Quiz Selection */}
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               <div>
-                <h3 className="text-lg font-semibold mb-4">Choose Your Challenge</h3>
+                <h3 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Choose Your Challenge</h3>
                 
                 {/* Topic Selection */}
-                <div className="mb-6">
-                  <label className="block text-sm font-medium mb-3">Select Topic</label>
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                <div className="mb-4 sm:mb-6">
+                  <label className="block text-sm font-medium mb-2 sm:mb-3">Select Topic</label>
+                  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3">
                     {[
                       { key: 'javascript', label: 'JavaScript', icon: '🟨', gradient: 'from-amber-300 to-orange-300' },
                       { key: 'typescript', label: 'TypeScript', icon: '🔷', gradient: 'from-blue-500 to-indigo-600' },
@@ -107,14 +107,14 @@ export const DashboardPage = () => {
                       <button
                         key={topic.key}
                         onClick={()=>setCategory(topic.key)}
-                         className={`p-4 ai-rounded-xl border text-left transition-all duration-300 ${
+                         className={`p-3 sm:p-4 ai-rounded-xl border text-left transition-all duration-300 ${
                            category === topic.key 
                              ? `bg-gradient-to-br ${topic.gradient} text-white border-transparent shadow-lg` 
                              : 'bg-gradient-to-br from-card to-card/80 hover:from-accent hover:to-accent/80 hover:scale-102 border-border shadow-sm hover:shadow-md'
                          }`}
                       >
-                        <div className="text-2xl mb-2">{topic.icon}</div>
-                        <div className="font-medium">{topic.label}</div>
+                        <div className="text-xl sm:text-2xl mb-1 sm:mb-2">{topic.icon}</div>
+                        <div className="text-sm sm:text-base font-medium">{topic.label}</div>
                       </button>
                     ))}
                   </div>

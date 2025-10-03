@@ -183,8 +183,8 @@ export const AIAssessmentPage = () => {
     <AIPageShell title="AI Assessment">
       <div className="p-6">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div className="flex items-center gap-4">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-3 sm:gap-0">
+          <div className="flex items-center gap-3 sm:gap-4">
             <Button 
               variant="ghost" 
               size="sm"
@@ -192,13 +192,13 @@ export const AIAssessmentPage = () => {
               className="flex items-center gap-2"
             >
               <ArrowLeft className="w-4 h-4" />
-              Back
+              <span className="hidden sm:inline">Back</span>
             </Button>
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg">
-                <Brain className="w-5 h-5 text-white" />
+            <div className="flex items-center gap-2 sm:gap-3">
+              <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg">
+                <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
-              <span className="text-xl font-bold bg-gradient-to-r from-purple-600 to-purple-500 bg-clip-text text-transparent">
+              <span className="text-lg sm:text-xl font-bold bg-gradient-to-r from-purple-600 to-purple-500 bg-clip-text text-transparent">
                 AI Assessment
               </span>
             </div>
@@ -207,15 +207,15 @@ export const AIAssessmentPage = () => {
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 sm:gap-8">
           {/* Configuration Panel */}
-          <div className="xl:col-span-3 space-y-6">
-            <Card className="p-8 ai-card-glow ai-glass">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-8 h-8 ai-button-gradient rounded-lg flex items-center justify-center">
-                  <Brain className="w-5 h-5 text-white" />
+          <div className="xl:col-span-3 space-y-4 sm:space-y-6">
+            <Card className="p-4 sm:p-6 lg:p-8 ai-card-glow ai-glass">
+              <div className="flex items-center gap-2 sm:gap-3 mb-6 sm:mb-8">
+                <div className="w-6 h-6 sm:w-8 sm:h-8 ai-button-gradient rounded-lg flex items-center justify-center">
+                  <Brain className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                 </div>
-                <h2 className="text-2xl font-bold ai-text-gradient">Create Your AI Assessment</h2>
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-bold ai-text-gradient">Create Your AI Assessment</h2>
               </div>
 
               {/* Topic Selection */}
@@ -233,12 +233,12 @@ export const AIAssessmentPage = () => {
                       errors.topic ? 'border-red-500' : 'border-input'
                     }`}
                   />
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-2 sm:gap-3">
                     {topics.slice(0, 12).map((topic) => (
                       <button
                         key={topic}
                         onClick={() => setConfig({ ...config, topic })}
-                        className={`px-4 py-3 text-sm ai-rounded-lg border transition-colors hover:bg-primary hover:text-primary-foreground ${
+                        className={`px-3 sm:px-4 py-2 sm:py-3 text-xs sm:text-sm ai-rounded-lg border transition-colors hover:bg-primary hover:text-primary-foreground ${
                           config.topic === topic
                             ? 'bg-primary text-primary-foreground border-primary'
                             : 'bg-background border-input hover:border-primary'
@@ -259,20 +259,20 @@ export const AIAssessmentPage = () => {
                 <label className="block text-base font-medium">
                   Choose difficulty level
                 </label>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4">
                   {difficultyLevels.map((level) => (
                     <button
                       key={level.value}
                       onClick={() => setConfig({ ...config, difficulty: level.value as 'easy' | 'medium' | 'hard' })}
-                      className={`p-6 text-center border ai-rounded-xl transition-all hover:scale-105 ${
+                      className={`p-4 sm:p-6 text-center border ai-rounded-xl transition-all hover:scale-105 ${
                         config.difficulty === level.value
                           ? `${level.bgColor} ${level.borderColor} ${level.color}`
                           : 'bg-card border-input hover:border-primary'
                       }`}
                     >
-                      <div className="flex flex-col items-center gap-2">
-                        <Target className="w-6 h-6" />
-                        <span className="font-semibold text-lg">{level.label}</span>
+                      <div className="flex flex-col items-center gap-1 sm:gap-2">
+                        <Target className="w-5 h-5 sm:w-6 sm:h-6" />
+                        <span className="font-semibold text-sm sm:text-lg">{level.label}</span>
                         <p className="text-xs opacity-80">{level.description}</p>
                       </div>
                     </button>
@@ -286,12 +286,12 @@ export const AIAssessmentPage = () => {
                   How many questions?
                 </label>
                 <div className="space-y-4">
-                  <div className="grid grid-cols-6 gap-3">
+                  <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 sm:gap-3">
                     {questionCounts.map((count) => (
                       <button
                         key={count}
                         onClick={() => setConfig({ ...config, questionCount: count })}
-                        className={`px-4 py-3 ai-rounded-lg border transition-colors text-center ${
+                        className={`px-3 sm:px-4 py-2 sm:py-3 ai-rounded-lg border transition-colors text-center ${
                           config.questionCount === count
                             ? 'bg-primary text-primary-foreground border-primary'
                             : 'bg-background border-input hover:border-primary hover:bg-primary/10'

@@ -42,58 +42,58 @@ export const HomePage = () => {
         {/* Subtle top-center watermark */}
         <div
           aria-hidden="true"
-          className="pointer-events-none select-none absolute left-1/2 -translate-x-1/2 top-6 z-10"
+          className="pointer-events-none select-none absolute left-1/2 -translate-x-1/2 top-4 sm:top-6 z-10"
         >
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-white/20 via-white/10 to-white/20 opacity-20 text-3xl md:text-2xl font-extrabold tracking-wide">
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-white/20 via-white/10 to-white/20 opacity-30 text-lg sm:text-xl md:text-2xl lg:text-3xl font-extrabold tracking-wide">
            Creator Mehvish
           </span>
         </div>
         {/* Header */}
         <div className="flex justify-between items-center p-4 lg:p-6">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg ai-button-gradient flex items-center justify-center shadow-lg ai-pulse">
-            <Sparkles className="w-5 h-5 text-white" />
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg ai-button-gradient flex items-center justify-center shadow-lg ai-pulse">
+            <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
             </div>
-            <span className="text-xl font-bold ai-text-gradient">Nebula AI Quiz</span>
+            <span className="text-lg sm:text-xl font-bold ai-text-gradient">Nebula AI Quiz</span>
           </div>
           <ThemeToggle />
         </div>
 
         {/* Hero Section */}
-        <div className="text-center py-8 px-4 lg:px-6">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border bg-gradient-to-r from-primary/20 to-primary/10 backdrop-blur-sm mb-4 ai-card-glow">
+        <div className="text-center py-6 sm:py-8 px-4 lg:px-6">
+          <div className="inline-flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-2 rounded-full border bg-gradient-to-r from-primary/20 to-primary/10 backdrop-blur-sm mb-4 ai-card-glow">
             {/* <Brain className="w-4 h-4 text-primary ai-pulse" /> */}
-            <Sparkles className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium">AI-Powered Learning</span>
-            <Zap className="w-4 h-4 text-primary" />
+            <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
+            <span className="text-xs sm:text-sm font-medium">AI-Powered Learning</span>
+            <Zap className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
           </div>
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 leading-tight">
             Explore the <span className="ai-text-gradient">Nebula of Knowledge</span> with AI
           </h1>
-          <p className="text-lg lg:text-xl text-muted-foreground mb-6 max-w-3xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground mb-6 max-w-3xl mx-auto leading-relaxed">
             Experience the future of learning with AI-generated quizzes, personalized assessments, and intelligent feedback on any topic you choose
           </p>
         </div>
 
         {/* Main Content Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 px-4 lg:px-6 pb-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 px-4 lg:px-6 pb-6 sm:pb-8">
           {/* Get Started Card */}
           <div className="order-2 lg:order-1">
-            <div className="bg-card border ai-rounded-2xl p-6 lg:p-8 shadow-sm h-full ai-card-glow">
-              <div className="text-center mb-6">
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <Bot className="w-6 h-6 text-primary ai-float" />
-                  <h2 className="text-xl lg:text-2xl font-bold">Ready for AI Learning?</h2>
-                  <Cpu className="w-6 h-6 text-primary ai-float" />
+            <div className="bg-card border ai-rounded-2xl p-4 sm:p-6 lg:p-8 shadow-sm h-full ai-card-glow">
+              <div className="text-center mb-4 sm:mb-6">
+                <div className="flex items-center justify-center gap-1 sm:gap-2 mb-3 sm:mb-4">
+                  <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-primary ai-float" />
+                  <h2 className="text-lg sm:text-xl lg:text-2xl font-bold">Ready for AI Learning?</h2>
+                  <Cpu className="w-5 h-5 sm:w-6 sm:h-6 text-primary ai-float" />
                 </div>
-                <p className="text-muted-foreground">Enter your details to begin your AI-powered learning journey</p>
+                <p className="text-sm sm:text-base text-muted-foreground">Enter your details to begin your AI-powered learning journey</p>
               </div>
               
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4">
                 <div>
                   <label className="block text-sm font-medium mb-2">Your Name</label>
                   <input 
-                    className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" 
+                    className="w-full px-3 sm:px-4 py-3 border border-input rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors mobile-input" 
                     placeholder="Enter your full name" 
                     value={username} 
                     onChange={(e)=>setUsername(e.target.value)} 
@@ -103,7 +103,7 @@ export const HomePage = () => {
                 <div>
                   <label className="block text-sm font-medium mb-2">Email Address</label>
                   <input 
-                    className="w-full px-4 py-3 border border-input rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors" 
+                    className="w-full px-3 sm:px-4 py-3 border border-input rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition-colors mobile-input" 
                     placeholder="your.email@example.com" 
                     type="email"
                     value={email} 
@@ -118,12 +118,12 @@ export const HomePage = () => {
                 )}
                 
                 <Button 
-                  className="w-full py-3 text-lg font-medium ai-button-gradient text-white shadow-lg hover:shadow-xl transition-all duration-200" 
+                  className="w-full py-3 text-base sm:text-lg font-medium ai-button-gradient text-white shadow-lg hover:shadow-xl transition-all duration-200 mobile-button-full" 
                   size="lg"
                   onClick={proceed}
                 >
                   Start AI Learning
-                  <Brain className="w-5 h-5 ml-2" />
+                  <Brain className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
                 </Button>
               </div>
             </div>
@@ -131,12 +131,12 @@ export const HomePage = () => {
 
           {/* Features */}
           <div className="order-1 lg:order-2">
-             <div className="mb-6">
-               <h2 className="text-xl lg:text-2xl font-bold mb-2 ai-text-gradient">Why Choose Nebula AI?</h2>
-               <p className="text-muted-foreground">Everything you need to master any technology with AI</p>
+             <div className="mb-4 sm:mb-6">
+               <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 ai-text-gradient">Why Choose Nebula AI?</h2>
+               <p className="text-sm sm:text-base text-muted-foreground">Everything you need to master any technology with AI</p>
              </div>
             
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div className="bg-card border ai-rounded-xl p-4 ai-card-glow hover:scale-105 transition-transform">
                 <div className="w-10 h-10 ai-button-gradient ai-rounded-lg flex items-center justify-center mb-3">
                   <Brain className="w-5 h-5 text-white" />
@@ -173,13 +173,13 @@ export const HomePage = () => {
         </div>
 
         {/* Secondary actions */}
-        <div className="text-center pb-8 px-4 lg:px-6">
-          <p className="text-muted-foreground mb-4">Already have an account?</p>
-          <div className="flex justify-center gap-3">
-            <Button variant="outline" onClick={()=>navigate('/history')}>
+        <div className="text-center pb-6 sm:pb-8 px-4 lg:px-6">
+          <p className="text-sm sm:text-base text-muted-foreground mb-4">Already have an account?</p>
+          <div className="flex flex-col sm:flex-row justify-center gap-3">
+            <Button variant="outline" onClick={()=>navigate('/history')} className="mobile-button-full sm:w-auto">
               View History
             </Button>
-            <Button variant="outline" onClick={()=>navigate('/admin/create')}>
+            <Button variant="outline" onClick={()=>navigate('/admin/create')} className="mobile-button-full sm:w-auto">
               Create Quiz
             </Button>
           </div>

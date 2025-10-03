@@ -44,7 +44,7 @@ export const AdminCreateQuiz = () => {
 
   return (
     <AIPageShell title="Create Quiz">
-      <div className="max-w-5xl space-y-6">
+      <div className="max-w-5xl space-y-4 sm:space-y-6">
         <div className="flex justify-end items-center">
           <ThemeToggle />
         </div>
@@ -53,17 +53,17 @@ export const AdminCreateQuiz = () => {
             {msg}
           </div>
         )}
-        <div className="grid gap-3 ai-card-glow ai-rounded-xl p-4 border bg-card ai-glass">
-          <input className="border border-input ai-rounded-md px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Title" value={title} onChange={(e)=>setTitle(e.target.value)} />
-          <input className="border border-input ai-rounded-md px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Description" value={description} onChange={(e)=>setDescription(e.target.value)} />
-          <div className="grid grid-cols-2 gap-3">
-            <select className="border border-input ai-rounded-md px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary" value={category} onChange={(e)=>setCategory(e.target.value)}>
+        <div className="grid gap-3 ai-card-glow ai-rounded-xl p-3 sm:p-4 border bg-card ai-glass">
+          <input className="mobile-input border border-input ai-rounded-md px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Title" value={title} onChange={(e)=>setTitle(e.target.value)} />
+          <input className="mobile-input border border-input ai-rounded-md px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Description" value={description} onChange={(e)=>setDescription(e.target.value)} />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            <select className="mobile-input border border-input ai-rounded-md px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary" value={category} onChange={(e)=>setCategory(e.target.value)}>
               <option value="javascript">JavaScript</option>
               <option value="typescript">TypeScript</option>
               <option value="react">React</option>
               <option value="next">Next</option>
             </select>
-            <select className="border border-input ai-rounded-md px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary" value={level} onChange={(e)=>setLevel(e.target.value)}>
+            <select className="mobile-input border border-input ai-rounded-md px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary" value={level} onChange={(e)=>setLevel(e.target.value)}>
               <option value="basic">Basic</option>
               <option value="advanced">Advanced</option>
             </select>

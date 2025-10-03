@@ -139,21 +139,24 @@ export const QuizPage = () => {
     <div className="min-h-screen bg-gradient-to-br from-background via-primary/5 to-primary/10">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="flex items-center justify-between p-4 lg:p-6 border-b border-border/50 bg-card/50 backdrop-blur-sm">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg">
-              <BookOpen className="w-4 h-4 text-primary-foreground" />
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 lg:p-6 border-b border-border/50 bg-card/50 backdrop-blur-sm gap-3 sm:gap-0">
+          <div className="flex items-center gap-2 sm:gap-3">
+            <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center shadow-lg">
+              <BookOpen className="w-3 h-3 sm:w-4 sm:h-4 text-primary-foreground" />
             </div>
             <div>
-              <h1 className="text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Quiz Challenge</h1>
-              <p className="text-sm text-muted-foreground">Question {currentIndex + 1} of {questions.length}</p>
+              <h1 className="text-lg sm:text-xl font-bold bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent">Quiz Challenge</h1>
+              <p className="text-xs sm:text-sm text-muted-foreground">Question {currentIndex + 1} of {questions.length}</p>
             </div>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 w-full sm:w-auto">
             <Timer minutes={minutes} seconds={seconds} isWarning={isWarning} />
-            <Button variant="ghost" size="sm" onClick={() => navigate(`/leaderboard/${quizId}`)}>
+            <Button variant="ghost" size="sm" onClick={() => navigate(`/leaderboard/${quizId}`)} className="hidden sm:flex">
               <Trophy className="w-4 h-4 mr-2" />
               Leaderboard
+            </Button>
+            <Button variant="ghost" size="sm" onClick={() => navigate(`/leaderboard/${quizId}`)} className="sm:hidden">
+              <Trophy className="w-4 h-4" />
             </Button>
             <ThemeToggle />
           </div>
@@ -195,53 +198,55 @@ export const QuizPage = () => {
 
         {/* Navigation */}
         <div className="border-t p-4 lg:p-6">
-          <div className="flex justify-between items-center">
-            <Button
-              variant="outline"
-              onClick={handlePrevious}
-              disabled={currentIndex === 0}
-              className="flex items-center gap-2"
-            >
-              <ChevronLeft className="w-4 h-4" />
-              Previous
-            </Button>
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 sm:gap-0">
+            <div className="flex items-center gap-2 sm:gap-4 w-full sm:w-auto">
+              <Button
+                variant="outline"
+                onClick={handlePrevious}
+                disabled={currentIndex === 0}
+                className="flex items-center gap-2 flex-1 sm:flex-none"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                <span className="hidden sm:inline">Previous</span>
+              </Button>
 
-            <div className="flex items-center gap-4">
               <Button
                 variant="ghost"
                 onClick={() => navigate('/dashboard')}
-                className="text-muted-foreground hover:text-foreground"
+                className="text-muted-foreground hover:text-foreground flex-1 sm:flex-none"
               >
-                <Home className="w-4 h-4 mr-2" />
-                Exit Quiz
+                <Home className="w-4 h-4 sm:mr-2" />
+                <span className="hidden sm:inline">Exit Quiz</span>
               </Button>
             </div>
 
-            {isLastQuestion ? (
-              <Button 
-                onClick={handleSubmit} 
-                disabled={submitting}
-                size="lg"
-                className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-lg hover:shadow-xl transition-all duration-200"
-              >
-                {submitting ? (
-                  <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                    Submitting...
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-4 h-4 mr-2" />
-                    Submit Quiz
-                  </>
-                )}
-              </Button>
-            ) : (
-              <Button onClick={handleNext} size="lg" className="bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all duration-200">
-                Next Question
-                <ChevronRight className="w-4 h-4 ml-2" />
-              </Button>
-            )}
+            <div className="w-full sm:w-auto">
+              {isLastQuestion ? (
+                <Button 
+                  onClick={handleSubmit} 
+                  disabled={submitting}
+                  size="lg"
+                  className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white shadow-lg hover:shadow-xl transition-all duration-200 mobile-button-full"
+                >
+                  {submitting ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                      Submitting...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4 mr-2" />
+                      Submit Quiz
+                    </>
+                  )}
+                </Button>
+              ) : (
+                <Button onClick={handleNext} size="lg" className="w-full bg-gradient-to-r from-primary to-primary/80 hover:from-primary/90 hover:to-primary/70 shadow-lg hover:shadow-xl transition-all duration-200 mobile-button-full">
+                  Next Question
+                  <ChevronRight className="w-4 h-4 ml-2" />
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </div>

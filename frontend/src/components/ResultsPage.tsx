@@ -30,9 +30,9 @@ export const ResultsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background p-4 py-8">
-      <div className="max-w-4xl mx-auto space-y-6">
-        <div className="flex justify-end mb-4">
+    <div className="min-h-screen bg-background p-3 sm:p-4 py-6 sm:py-8">
+      <div className="max-w-4xl mx-auto space-y-4 sm:space-y-6">
+        <div className="flex justify-end mb-3 sm:mb-4">
           <ThemeToggle />
         </div>
         <Card>
@@ -42,29 +42,29 @@ export const ResultsPage = () => {
                 <Trophy className={`w-16 h-16 ${scoreColor}`} />
               </div>
             </div>
-            <CardTitle className="text-3xl font-bold">{getMessage()}</CardTitle>
+            <CardTitle className="text-2xl sm:text-3xl font-bold">{getMessage()}</CardTitle>
           </CardHeader>
-          <CardContent className="space-y-6">
-            <div className="text-center space-y-4">
+          <CardContent className="space-y-4 sm:space-y-6">
+            <div className="text-center space-y-3 sm:space-y-4">
               <div>
-                <p className={`text-6xl font-bold mb-2 ${scoreColor}`}>
+                <p className={`text-4xl sm:text-5xl lg:text-6xl font-bold mb-2 ${scoreColor}`}>
                   {result.score_percentage}%
                 </p>
-                <Progress value={result.score_percentage} className="h-3" />
+                <Progress value={result.score_percentage} className="h-2 sm:h-3" />
               </div>
               
-              <div className="grid grid-cols-2 gap-4 max-w-md mx-auto mt-6">
-                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-                  <p className="text-3xl font-bold text-green-600 dark:text-green-400">
+              <div className="grid grid-cols-2 gap-3 sm:gap-4 max-w-md mx-auto mt-4 sm:mt-6">
+                <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3 sm:p-4">
+                  <p className="text-2xl sm:text-3xl font-bold text-green-600 dark:text-green-400">
                     {result.correct_answers}
                   </p>
-                  <p className="text-sm text-green-700 dark:text-green-300">Correct</p>
+                  <p className="text-xs sm:text-sm text-green-700 dark:text-green-300">Correct</p>
                 </div>
-                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-                  <p className="text-3xl font-bold text-red-600 dark:text-red-400">
+                <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3 sm:p-4">
+                  <p className="text-2xl sm:text-3xl font-bold text-red-600 dark:text-red-400">
                     {result.total_questions - result.correct_answers}
                   </p>
-                  <p className="text-sm text-red-700 dark:text-red-300">Incorrect</p>
+                  <p className="text-xs sm:text-sm text-red-700 dark:text-red-300">Incorrect</p>
                 </div>
               </div>
             </div>
@@ -115,16 +115,16 @@ export const ResultsPage = () => {
             )}
           </CardContent>
         </Card>
-        <div className="flex justify-center gap-2">
-          <Button variant="outline" onClick={() => navigate('/')}> 
+        <div className="flex flex-col sm:flex-row justify-center gap-2 sm:gap-3">
+          <Button variant="outline" onClick={() => navigate('/')} className="mobile-button-full sm:w-auto"> 
             <Home className="w-4 h-4 mr-2" /> Back to Home
           </Button>
           {quizId && (
-            <Button onClick={() => navigate(`/leaderboard/${quizId}`)}>
+            <Button onClick={() => navigate(`/leaderboard/${quizId}`)} className="mobile-button-full sm:w-auto">
               View Leaderboard
             </Button>
           )}
-          <Button onClick={() => navigate('/history')}>
+          <Button onClick={() => navigate('/history')} className="mobile-button-full sm:w-auto">
             View History
           </Button>
         </div>

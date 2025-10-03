@@ -20,42 +20,42 @@ export const QuestionCard: React.FC<QuestionCardProps> = ({
 
   return (
     <Card className="w-full shadow-sm">
-      <CardHeader className="pb-6">
-        <CardTitle className="text-2xl leading-relaxed mb-4">
+      <CardHeader className="pb-4 sm:pb-6">
+        <CardTitle className="text-lg sm:text-xl lg:text-2xl leading-relaxed mb-3 sm:mb-4">
           {question.question_text}
         </CardTitle>
-        <p className="text-sm text-muted-foreground">
+        <p className="text-xs sm:text-sm text-muted-foreground">
           Choose the best answer from the options below
         </p>
       </CardHeader>
       <CardContent>
-        <div className="space-y-3">
+        <div className="space-y-2 sm:space-y-3">
           {options.map((option) => {
             const isSelected = selectedOption === option;
             return (
               <button
                 key={option}
                 onClick={() => onSelectOption(option)}
-                className={`w-full p-4 rounded-xl border text-left transition-all hover:scale-[1.02] ${
+                className={`w-full p-3 sm:p-4 rounded-xl border text-left transition-all hover:scale-[1.02] mobile-button-full ${
                   isSelected
                     ? 'bg-primary text-primary-foreground border-primary shadow-md'
                     : 'bg-card hover:bg-accent border-border hover:border-accent-foreground/20'
                 }`}
               >
-                <div className="flex items-start gap-4">
-                  <div className={`w-8 h-8 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${
+                <div className="flex items-start gap-3 sm:gap-4">
+                  <div className={`w-6 h-6 sm:w-8 sm:h-8 rounded-full border-2 flex items-center justify-center flex-shrink-0 mt-0.5 ${
                     isSelected 
                       ? 'border-primary-foreground bg-primary-foreground/20' 
                       : 'border-muted-foreground/30'
                   }`}>
                     {isSelected ? (
-                      <CheckCircle2 className="w-4 h-4" />
+                      <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4" />
                     ) : (
-                      <span className="text-sm font-bold">{option}</span>
+                      <span className="text-xs sm:text-sm font-bold">{option}</span>
                     )}
                   </div>
                   <div className="flex-1">
-                    <span className={`text-base leading-relaxed ${
+                    <span className={`text-sm sm:text-base leading-relaxed ${
                       isSelected ? 'font-medium' : ''
                     }`}>
                       {question.options[option]}

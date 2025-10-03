@@ -57,24 +57,47 @@ export const LeaderboardPage = () => {
       <div className="max-w-5xl space-y-4">
         <div className="flex justify-end"><ThemeToggle /></div>
         <div className="bg-card border ai-rounded-xl ai-card-glow ai-glass overflow-hidden">
-          <div className="grid grid-cols-6 px-4 py-2 text-sm font-semibold border-b">
-            <div>Rank</div>
-            <div className="col-span-2">User</div>
-            <div>Score</div>
-            <div>Correct</div>
-            <div>Date</div>
-          </div>
-          {rows.length === 0 ? (
-            <div className="px-4 py-8 text-center text-muted-foreground">No leaderboard data yet.</div>
-          ) : rows.map(r => (
-            <div key={`${r.email}-${r.created_at}`} className="grid grid-cols-6 px-4 py-2 border-b last:border-b-0">
-              <div>#{r.rank}</div>
-              <div className="col-span-2">{r.username} <span className="text-xs text-muted-foreground">({r.email})</span></div>
-              <div className="font-semibold">{r.score_percentage}%</div>
-              <div>{r.correct_answers}/{r.total_questions}</div>
-              <div className="text-sm text-muted-foreground">{new Date(r.created_at).toLocaleString()}</div>
+          {/* Desktop Table */}
+          <div className="hidden sm:block">
+            <div className="grid grid-cols-6 px-4 py-2 text-sm font-semibold border-b">
+              <div>Rank</div>
+              <div className="col-span-2">User</div>
+              <div>Score</div>
+              <div>Correct</div>
+              <div>Date</div>
             </div>
-          ))}
+            {rows.length === 0 ? (
+              <div className="px-4 py-8 text-center text-muted-foreground">No leaderboard data yet.</div>
+            ) : rows.map(r => (
+              <div key={`${r.email}-${r.created_at}`} className="grid grid-cols-6 px-4 py-2 border-b last:border-b-0">
+                <div>#{r.rank}</div>
+                <div className="col-span-2">{r.username} <span className="text-xs text-muted-foreground">({r.email})</span></div>
+                <div className="font-semibold">{r.score_percentage}%</div>
+                <div>{r.correct_answers}/{r.total_questions}</div>
+                <div className="text-sm text-muted-foreground">{new Date(r.created_at).toLocaleString()}</div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Mobile Cards */}
+          <div className="sm:hidden">
+            {rows.length === 0 ? (
+              <div className="px-4 py-8 text-center text-muted-foreground">No leaderboard data yet.</div>
+            ) : rows.map(r => (
+              <div key={`${r.email}-${r.created_at}`} className="p-4 border-b last:border-b-0">
+                <div className="flex justify-between items-start mb-2">
+                  <div className="font-semibold text-lg">#{r.rank}</div>
+                  <div className="text-right">
+                    <div className="font-bold text-lg text-primary">{r.score_percentage}%</div>
+                    <div className="text-sm text-muted-foreground">{r.correct_answers}/{r.total_questions}</div>
+                  </div>
+                </div>
+                <div className="text-sm font-medium">{r.username}</div>
+                <div className="text-xs text-muted-foreground mb-1">{r.email}</div>
+                <div className="text-xs text-muted-foreground">{new Date(r.created_at).toLocaleString()}</div>
+              </div>
+            ))}
+          </div>
         </div>
         <div className="flex justify-center">
           <Button onClick={() => navigate('/')}>Back to Home</Button>
