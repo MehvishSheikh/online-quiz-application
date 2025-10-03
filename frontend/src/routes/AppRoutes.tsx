@@ -24,8 +24,6 @@ const AppRoutes: React.FC = () => {
       <Route path="/leaderboard" element={<LeaderboardPage/>} />
       <Route path="/leaderboard/:id" element={<LeaderboardPage/>} />
       <Route path="/admin/create" element={<AdminCreateQuiz/>} />
-
-
     </Routes>
   );
 };
