@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { quizApi } from '@/services/api/api.service';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { AIPageShell } from '@/components/AISidebar';
 import { BookOpen, Trophy, History, Plus, Play, User, ArrowRight, Brain, Sparkles } from 'lucide-react';
 
 export const DashboardPage = () => {
@@ -34,33 +35,9 @@ export const DashboardPage = () => {
   }
 
   return (
-    <div className="min-h-screen ai-gradient-bg text-foreground">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex items-center justify-between p-4 lg:p-6 border-b border-border/50 bg-card/50 backdrop-blur-sm ai-card-glow">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg ai-button-gradient flex items-center justify-center shadow-lg ai-pulse">
-              <Brain className="w-5 h-5 text-white" />
-            </div>
-            <h1 className="text-2xl font-extrabold tracking-tight ai-text-gradient">QuizNova AI</h1>
-          </div>
-          <div className="flex items-center gap-3">
-            <nav className="hidden sm:flex items-center gap-2">
-              <Button variant="ghost" size="sm" onClick={()=>navigate('/home')}>
-                Home
-              </Button>
-              <Button variant="ghost" size="sm" onClick={()=>navigate('/history')}>
-                <History className="w-4 h-4 mr-2" />
-                History
-              </Button>
-              <Button variant="ghost" size="sm" onClick={()=>navigate('/admin/create')}>
-                <Plus className="w-4 h-4 mr-2" />
-                Create
-              </Button>
-            </nav>
-            <ThemeToggle />
-          </div>
-        </div>
+    <AIPageShell title="Dashboard">
+      <div className="max-w-7xl">
+        {/* Header removed; AIPageShell header is used globally */}
 
         {/* Welcome Section */}
         {user && (
@@ -79,7 +56,7 @@ export const DashboardPage = () => {
 
         {/* AI Assessment Banner */}
         <div className="p-4 lg:p-6 border-b">
-          <div className="ai-card-glow border border-primary/20 rounded-xl p-6">
+          <div className="ai-card-glow ai-glass border border-primary/20 rounded-xl p-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 rounded-lg ai-button-gradient flex items-center justify-center shadow-lg ai-pulse">
@@ -106,9 +83,9 @@ export const DashboardPage = () => {
 
         {/* Main Content */}
         <div className="p-4 lg:p-6">
-          <div className="grid grid-cols-1 xl:grid-cols-4 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 2xl:grid-cols-2 gap-6 lg:gap-8">
             {/* Quiz Selection */}
-            <div className="xl:col-span-3 space-y-6">
+            <div className="space-y-6">
               <div>
                 <h3 className="text-lg font-semibold mb-4">Choose Your Challenge</h3>
                 
@@ -117,7 +94,7 @@ export const DashboardPage = () => {
                   <label className="block text-sm font-medium mb-3">Select Topic</label>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                     {[
-                      { key: 'javascript', label: 'JavaScript', icon: '🟨', gradient: 'from-yellow-400 to-orange-500' },
+                      { key: 'javascript', label: 'JavaScript', icon: '🟨', gradient: 'from-amber-300 to-orange-300' },
                       { key: 'typescript', label: 'TypeScript', icon: '🔷', gradient: 'from-blue-500 to-indigo-600' },
                       { key: 'react', label: 'React', icon: '⚛️', gradient: 'from-cyan-400 to-blue-500' },
                       { key: 'next', label: 'Next.js', icon: '▲', gradient: 'from-gray-900 to-gray-700' }
@@ -143,7 +120,7 @@ export const DashboardPage = () => {
                   <label className="block text-sm font-medium mb-3">Select Difficulty</label>
                   <div className="grid grid-cols-2 gap-3">
                     {[
-                      { key: 'basic', label: 'Basic', desc: 'Fundamental concepts', icon: '🌱', gradient: 'from-green-400 to-emerald-500' },
+                      { key: 'basic', label: 'Basic', desc: 'Fundamental concepts', icon: '🌱', gradient: 'from-emerald-300 to-emerald-400' },
                       { key: 'advanced', label: 'Advanced', desc: 'Complex scenarios', icon: '🚀', gradient: 'from-purple-500 to-pink-500' }
                     ].map(lvl => (
                       <button
@@ -222,40 +199,11 @@ export const DashboardPage = () => {
               </div>
             </div>
 
-            {/* Sidebar */}
-            <div className="space-y-6">
-               <div className="bg-card border ai-rounded-xl p-6 ai-card-glow">
-                <h4 className="font-semibold mb-4">Quick Actions</h4>
-                <div className="space-y-3">
-                  <Button 
-                    variant="outline" 
-                    className="w-full justify-start border-primary/20 hover:bg-primary/10 hover:border-primary/40" 
-                    onClick={()=>navigate('/ai-assessment')}
-                  >
-                    <Brain className="w-4 h-4 mr-3 text-primary" />
-                    AI Assessment
-                  </Button>
-                  <Button variant="outline" className="w-full justify-start" onClick={()=>navigate('/history')}>
-                    <History className="w-4 h-4 mr-3" />
-                    View History
-                  </Button>
-                  {quizzes[0] && (
-                    <Button variant="outline" className="w-full justify-start" onClick={()=>navigate(`/leaderboard/${quizzes[0].id}`)}>
-                      <Trophy className="w-4 h-4 mr-3" />
-                      Leaderboard
-                    </Button>
-                  )}
-                  <Button variant="outline" className="w-full justify-start" onClick={()=>navigate('/admin/create')}>
-                    <Plus className="w-4 h-4 mr-3" />
-                    Create Quiz
-                  </Button>
-                </div>
-              </div>
-            </div>
+            {/* Quick Actions removed to allow content to expand */}
           </div>
         </div>
       </div>
-    </div>
+    </AIPageShell>
   );
 }
 

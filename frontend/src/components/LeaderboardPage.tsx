@@ -3,33 +3,60 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { quizApi } from '@/services/api/api.service';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { AIPageShell } from '@/components/AISidebar';
 
 export const LeaderboardPage = () => {
   const { id } = useParams();
-  const quizId = Number(id);
+  const quizId = id ? Number(id) : undefined;
   const navigate = useNavigate();
   const [rows, setRows] = useState<Array<{ rank: number; username: string; email: string; score_percentage: number; correct_answers: number; total_questions: number; created_at: string }>>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!quizId) {
+      setLoading(false);
+      return;
+    }
     quizApi.getLeaderboard(quizId)
       .then(setRows)
       .catch(() => setError('Failed to load leaderboard'))
       .finally(() => setLoading(false));
   }, [quizId]);
 
-  if (loading) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
-  if (error) return <div className="min-h-screen flex items-center justify-center">{error}</div>;
+  if (loading) return (
+    <AIPageShell title="Leaderboard">
+      <div className="max-w-5xl space-y-4">
+        <div className="ai-skeleton ai-skeleton-title w-48"></div>
+        <div className="bg-card border ai-rounded-xl p-4 ai-card-glow">
+          <div className="ai-skeleton ai-skeleton-text w-full mb-2"></div>
+          <div className="ai-skeleton ai-skeleton-text w-5/6 mb-2"></div>
+          <div className="ai-skeleton ai-skeleton-text w-2/3"></div>
+        </div>
+      </div>
+    </AIPageShell>
+  );
+  if (!quizId) return (
+    <AIPageShell title="Leaderboard">
+      <div className="max-w-5xl space-y-4">
+        <div className="bg-card border ai-rounded-xl ai-card-glow ai-glass p-6 text-center">
+          <div className="text-lg font-semibold mb-2">Select a quiz to view its leaderboard</div>
+          <div className="text-sm text-muted-foreground">You can open a quiz and then click Leaderboard from its page.</div>
+        </div>
+      </div>
+    </AIPageShell>
+  );
+  if (error) return (
+    <AIPageShell title="Leaderboard">
+      <div className="text-destructive">{error}</div>
+    </AIPageShell>
+  );
 
   return (
-    <div className="min-h-screen bg-background text-foreground p-4 py-8">
-      <div className="max-w-3xl mx-auto space-y-4">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Leaderboard</h1>
-          <ThemeToggle />
-        </div>
-        <div className="bg-white dark:bg-card border rounded-md">
+    <AIPageShell title="Leaderboard">
+      <div className="max-w-5xl space-y-4">
+        <div className="flex justify-end"><ThemeToggle /></div>
+        <div className="bg-card border ai-rounded-xl ai-card-glow ai-glass overflow-hidden">
           <div className="grid grid-cols-6 px-4 py-2 text-sm font-semibold border-b">
             <div>Rank</div>
             <div className="col-span-2">User</div>
@@ -37,7 +64,9 @@ export const LeaderboardPage = () => {
             <div>Correct</div>
             <div>Date</div>
           </div>
-          {rows.map(r => (
+          {rows.length === 0 ? (
+            <div className="px-4 py-8 text-center text-muted-foreground">No leaderboard data yet.</div>
+          ) : rows.map(r => (
             <div key={`${r.email}-${r.created_at}`} className="grid grid-cols-6 px-4 py-2 border-b last:border-b-0">
               <div>#{r.rank}</div>
               <div className="col-span-2">{r.username} <span className="text-xs text-muted-foreground">({r.email})</span></div>
@@ -51,7 +80,7 @@ export const LeaderboardPage = () => {
           <Button onClick={() => navigate('/')}>Back to Home</Button>
         </div>
       </div>
-    </div>
+    </AIPageShell>
   );
 }
 

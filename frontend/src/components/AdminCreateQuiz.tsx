@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { quizApi } from '@/services/api/api.service';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { AIPageShell } from '@/components/AISidebar';
 
 export const AdminCreateQuiz = () => {
   const [title, setTitle] = useState('');
@@ -36,24 +37,23 @@ export const AdminCreateQuiz = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background text-foreground p-4 py-8">
-      <div className="max-w-3xl mx-auto space-y-6">
-        <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Create Quiz</h1>
+    <AIPageShell title="Create Quiz">
+      <div className="max-w-5xl space-y-6">
+        <div className="flex justify-end items-center">
           <ThemeToggle />
         </div>
         {msg && <p className="text-sm text-muted-foreground">{msg}</p>}
-        <div className="grid gap-3">
-          <input className="border border-input rounded px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring" placeholder="Title" value={title} onChange={(e)=>setTitle(e.target.value)} />
-          <input className="border border-input rounded px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring" placeholder="Description" value={description} onChange={(e)=>setDescription(e.target.value)} />
+        <div className="grid gap-3 ai-card-glow ai-rounded-xl p-4 border bg-card ai-glass">
+          <input className="border border-input ai-rounded-md px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Title" value={title} onChange={(e)=>setTitle(e.target.value)} />
+          <input className="border border-input ai-rounded-md px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary" placeholder="Description" value={description} onChange={(e)=>setDescription(e.target.value)} />
           <div className="grid grid-cols-2 gap-3">
-            <select className="border border-input rounded px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring" value={category} onChange={(e)=>setCategory(e.target.value)}>
+            <select className="border border-input ai-rounded-md px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary" value={category} onChange={(e)=>setCategory(e.target.value)}>
               <option value="javascript">JavaScript</option>
               <option value="typescript">TypeScript</option>
               <option value="react">React</option>
               <option value="next">Next</option>
             </select>
-            <select className="border border-input rounded px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring" value={level} onChange={(e)=>setLevel(e.target.value)}>
+            <select className="border border-input ai-rounded-md px-3 py-2 bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary" value={level} onChange={(e)=>setLevel(e.target.value)}>
               <option value="basic">Basic</option>
               <option value="advanced">Advanced</option>
             </select>
@@ -63,16 +63,16 @@ export const AdminCreateQuiz = () => {
           )}
         </div>
 
-        <div className="border-t pt-6 space-y-3">
+        <div className="border-t pt-6 space-y-3 ai-card-glow ai-rounded-xl p-4 border bg-card ai-glass">
           <h2 className="font-semibold">Add Question</h2>
-          <input className="border rounded px-3 py-2" placeholder="Question text" value={question.question_text} onChange={(e)=>setQuestion({...question, question_text: e.target.value})} />
+          <input className="border ai-rounded-md px-3 py-2" placeholder="Question text" value={question.question_text} onChange={(e)=>setQuestion({...question, question_text: e.target.value})} />
           <div className="grid grid-cols-2 gap-3">
-            <input className="border rounded px-3 py-2" placeholder="Option A" value={question.option_a} onChange={(e)=>setQuestion({...question, option_a: e.target.value})} />
-            <input className="border rounded px-3 py-2" placeholder="Option B" value={question.option_b} onChange={(e)=>setQuestion({...question, option_b: e.target.value})} />
-            <input className="border rounded px-3 py-2" placeholder="Option C" value={question.option_c} onChange={(e)=>setQuestion({...question, option_c: e.target.value})} />
-            <input className="border rounded px-3 py-2" placeholder="Option D" value={question.option_d} onChange={(e)=>setQuestion({...question, option_d: e.target.value})} />
+            <input className="border ai-rounded-md px-3 py-2" placeholder="Option A" value={question.option_a} onChange={(e)=>setQuestion({...question, option_a: e.target.value})} />
+            <input className="border ai-rounded-md px-3 py-2" placeholder="Option B" value={question.option_b} onChange={(e)=>setQuestion({...question, option_b: e.target.value})} />
+            <input className="border ai-rounded-md px-3 py-2" placeholder="Option C" value={question.option_c} onChange={(e)=>setQuestion({...question, option_c: e.target.value})} />
+            <input className="border ai-rounded-md px-3 py-2" placeholder="Option D" value={question.option_d} onChange={(e)=>setQuestion({...question, option_d: e.target.value})} />
           </div>
-          <select className="border rounded px-3 py-2" value={question.correct_option} onChange={(e)=>setQuestion({...question, correct_option: e.target.value as any})}>
+          <select className="border ai-rounded-md px-3 py-2" value={question.correct_option} onChange={(e)=>setQuestion({...question, correct_option: e.target.value as any})}>
             <option value="A">A</option>
             <option value="B">B</option>
             <option value="C">C</option>
@@ -91,7 +91,7 @@ export const AdminCreateQuiz = () => {
           </Button>
         </div>
       </div>
-    </div>
+    </AIPageShell>
   );
 };
 

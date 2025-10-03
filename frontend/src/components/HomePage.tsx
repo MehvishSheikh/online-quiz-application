@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { BookOpen, Clock, Trophy, Sparkles, ShieldCheck, Brain, Zap, Cpu, Bot } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
+// Home page intentionally does not use AIPageShell per request
 
 export const HomePage = () => {
   const navigate = useNavigate();

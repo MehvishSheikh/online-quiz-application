@@ -5,6 +5,7 @@ import { type AttemptRecord } from '@/types/quiz.types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { AIPageShell } from '@/components/AISidebar';
 
 export const HistoryPage = () => {
   const navigate = useNavigate();
@@ -40,9 +41,16 @@ export const HistoryPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>Loading...</p>
-      </div>
+      <AIPageShell title="History">
+        <div className="max-w-3xl space-y-4">
+          <div className="ai-skeleton ai-skeleton-title w-56"></div>
+          <div className="bg-card border ai-rounded-xl p-4 ai-card-glow">
+            <div className="ai-skeleton ai-skeleton-text w-2/3"></div>
+            <div className="ai-skeleton ai-skeleton-text w-full"></div>
+            <div className="ai-skeleton ai-skeleton-text w-5/6"></div>
+          </div>
+        </div>
+      </AIPageShell>
     );
   }
 
@@ -58,15 +66,15 @@ export const HistoryPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-4 py-8">
-      <div className="max-w-3xl mx-auto space-y-6">
-        <Card>
+    <AIPageShell title="Your Quiz History">
+      <div className="max-w-5xl space-y-6">
+        <Card className="ai-card-glow ai-rounded-xl ai-glass">
           <CardHeader>
             <div className="flex items-center justify-between gap-3">
               <CardTitle>Your Quiz History</CardTitle>
               <div className="flex items-center gap-2">
                 <input
-                  className="hidden md:block w-64 px-3 py-2 border rounded-md focus:outline-none"
+                  className="hidden md:block w-64 px-3 py-2 border ai-rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Enter email to view history"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -105,7 +113,7 @@ export const HistoryPage = () => {
                     <h3 className="font-semibold mb-2">Quiz #{quizId}</h3>
                     <div className="space-y-2">
                       {items.map((a) => (
-                        <div key={a.id} className="flex justify-between items-center bg-white rounded-md border p-3">
+                        <div key={a.id} className="flex justify-between items-center bg-card ai-rounded-md border p-3">
                           <div>
                             <p className="text-sm text-muted-foreground">{new Date(a.created_at).toLocaleString()}</p>
                           </div>
@@ -127,12 +135,12 @@ export const HistoryPage = () => {
             {username && email ? (<span>Signed in as <span className="font-medium">{username}</span> ({email})</span>) : null}
           </div>
           <div className="space-x-2">
-            <Button variant="outline" onClick={() => navigate('/start')}>Back to Start</Button>
-            <Button onClick={() => navigate('/quiz')}>Take Quiz</Button>
+            <Button variant="outline" onClick={() => navigate('/home')}>Home</Button>
+            <Button onClick={() => navigate('/dashboard')}>Go to Dashboard</Button>
           </div>
         </div>
       </div>
-    </div>
+    </AIPageShell>
   );
 };
 

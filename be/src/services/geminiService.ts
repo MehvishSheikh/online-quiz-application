@@ -26,10 +26,10 @@ export class GeminiService {
         model: 'gemini-2.5-flash',
         contents: prompt,
         config: {
-          temperature: 0.7,
+          temperature: 0.5, // Reduced from 0.7 for more focused responses
           topK: 40,
-          topP: 0.95,
-          maxOutputTokens: 8192,
+          topP: 0.9, // Reduced from 0.95 for less randomness
+          maxOutputTokens: 16384,
         }
       });
       
@@ -52,12 +52,18 @@ export class GeminiService {
       
       cleanedText = cleanedText.trim();
       
+      // Check if response looks incomplete
+      if (!cleanedText.endsWith('}') && !cleanedText.endsWith(']')) {
+        console.error('AI response appears truncated. Last 200 chars:', cleanedText.slice(-200));
+        throw new Error('AI response was truncated');
+      }
+      
       // Parse the JSON response
       let parsedResponse;
       try {
         parsedResponse = JSON.parse(cleanedText);
       } catch (parseError) {
-        console.error('Failed to parse AI response as JSON:', cleanedText);
+        console.error('Failed to parse AI response as JSON. Last 300 chars:', cleanedText.slice(-300));
         throw new Error('Invalid JSON response from AI');
       }
       
@@ -88,27 +94,35 @@ export class GeminiService {
 
     return `You are an expert quiz creator. Generate ${request.questionCount} multiple-choice questions about "${request.topic}" at ${request.difficulty} level.
 
-IMPORTANT REQUIREMENTS:
-1. Each question should test ${difficultyDescriptions[request.difficulty]}
+STRICT REQUIREMENTS:
+1. Each question must test ${difficultyDescriptions[request.difficulty]}
 2. Provide exactly 4 options (A, B, C, D) for each question
 3. Only ONE option should be correct
-4. Include a clear explanation for why the correct answer is right
-5. Make questions practical and relevant to real-world scenarios
-6. Avoid trick questions or overly ambiguous wording
+4. Keep explanations SHORT - maximum 2-3 sentences
+5. Questions must be clear, factual, and unambiguous
+6. Avoid overly complex or trick questions
+7. Base questions on well-established, verifiable facts only
 
-RESPONSE FORMAT (JSON ONLY):
+EXPLANATION RULES:
+- Maximum 2-3 sentences per explanation
+- State only the core reason why the answer is correct
+- Be direct and concise
+- Do NOT include unnecessary details or tangents
+- Focus on the key concept being tested
+
+RESPONSE FORMAT (STRICT JSON):
 {
   "questions": [
     {
-      "question": "Your question text here?",
+      "question": "Clear, concise question text?",
       "options": {
-        "A": "First option",
-        "B": "Second option", 
-        "C": "Third option",
-        "D": "Fourth option"
+        "A": "Short option text",
+        "B": "Short option text", 
+        "C": "Short option text",
+        "D": "Short option text"
       },
       "correct_answer": "A",
-      "explanation": "Detailed explanation of why this answer is correct and others are wrong"
+      "explanation": "Brief explanation in 2-3 sentences maximum."
     }
   ]
 }
@@ -117,7 +131,12 @@ Topic: ${request.topic}
 Difficulty: ${request.difficulty}
 Number of questions: ${request.questionCount}
 
-CRITICAL: Return ONLY the raw JSON object. Do NOT wrap it in markdown code blocks or backticks. Do NOT include any text before or after the JSON.`;
+CRITICAL INSTRUCTIONS:
+- Return ONLY valid, complete JSON
+- NO markdown formatting or code blocks
+- Keep ALL text concise to prevent truncation
+- Each explanation must be under 100 words
+- Ensure JSON is properly closed with all brackets and braces`;
   }
 }
 

@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { ArrowLeft, Brain, Clock, Target, Sparkles, Zap } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
+import { AIPageShell } from '@/components/AISidebar';
 
 interface AssessmentConfig {
   topic: string;
@@ -20,7 +21,7 @@ export const AIAssessmentPage = () => {
   });
   const [isGenerating, setIsGenerating] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
-
+  const API_BASE_URL = import.meta.env.VITE_API_URL
   const topics = [
     'JavaScript Fundamentals',
     'React Development',
@@ -106,7 +107,7 @@ export const AIAssessmentPage = () => {
     
     try {
       // Call API to generate quiz
-      const response = await fetch('http://localhost:3001/api/ai-assessment/generate', {
+      const response = await fetch(`${API_BASE_URL}/ai-assessment/generate`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -143,8 +144,8 @@ export const AIAssessmentPage = () => {
   };
 
   return (
-    <div className="min-h-screen ai-gradient-bg">
-      <div className="max-w-7xl mx-auto p-6">
+    <AIPageShell title="AI Assessment">
+      <div className="p-6">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
           <div className="flex items-center gap-4">
@@ -173,7 +174,7 @@ export const AIAssessmentPage = () => {
         <div className="grid grid-cols-1 xl:grid-cols-4 gap-8">
           {/* Configuration Panel */}
           <div className="xl:col-span-3 space-y-6">
-            <Card className="p-8 ai-card-glow">
+            <Card className="p-8 ai-card-glow ai-glass">
               <div className="flex items-center gap-3 mb-8">
                 <div className="w-8 h-8 ai-button-gradient rounded-lg flex items-center justify-center">
                   <Brain className="w-5 h-5 text-white" />
@@ -315,7 +316,7 @@ export const AIAssessmentPage = () => {
 
           {/* Summary Panel */}
           <div className="space-y-6">
-            <Card className="p-6 ai-card-glow">
+            <Card className="p-6 ai-card-glow ai-glass">
               <div className="flex items-center gap-3 mb-6">
                 <Clock className="w-5 h-5 text-primary" />
                 <h3 className="text-lg font-semibold">Summary</h3>
@@ -352,6 +353,6 @@ export const AIAssessmentPage = () => {
           </div>
         </div>
       </div>
-    </div>
+    </AIPageShell>
   );
 };
