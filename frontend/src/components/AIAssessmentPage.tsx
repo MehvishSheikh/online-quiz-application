@@ -103,7 +103,7 @@ export const AIAssessmentPage = () => {
     
     console.log('🚀 Starting quiz generation...');
     console.log('📊 Request data:', requestData);
-    console.log('🔗 API URL: http://localhost:3001/api/ai-assessment/generate');
+    console.log('🔗 API URL: {API}/api/ai-assessment/generate');
     
     try {
       // Call API to generate quiz
