@@ -123,7 +123,7 @@ export const HomePage = () => {
           {/* Features */}
           <div className="order-1 lg:order-2">
              <div className="mb-6">
-               <h2 className="text-xl lg:text-2xl font-bold mb-2 ai-text-gradient">Why Choose QuizNova AI?</h2>
+               <h2 className="text-xl lg:text-2xl font-bold mb-2 ai-text-gradient">Why Choose Nebula AI?</h2>
                <p className="text-muted-foreground">Everything you need to master any technology with AI</p>
              </div>
             

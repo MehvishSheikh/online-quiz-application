@@ -5,6 +5,7 @@ A full‑stack quiz application with a Node.js/Express + SQLite backend and a Re
 ### Tech Stack
 - **Frontend**: React 19, TypeScript, Vite, React Router, Tailwind CSS, Radix UI
 - **Backend**: Node.js, Express, SQLite3, TypeScript, Jest (tests)
+- **AI**: Google Gemini for AI‑generated assessments (with static fallback)
 
 ### Repository Structure
 ```
@@ -15,6 +16,8 @@ online-quiz-application/
       controllers/quizcontroller.ts
       routes/quizrouter.ts
       services/quizservice.ts
+      services/geminiService.ts
+      schemas/aiQuizSchema.ts
       utils/seedDatabase.ts
       server.ts
     quiz.db             # SQLite database file (generated/used at runtime)
@@ -93,11 +96,14 @@ Then open the frontend URL Vite prints (typically `http://localhost:5173`).
 ### Backend environment variables
 - `PORT` (optional): HTTP port for Express. Default: `3000`.
 - `DB_PATH` (optional): Path to SQLite DB file. Default: `./be/quiz.db` relative to project root when built, or resolved within `be`.
+- `GEMINI_API_KEY` (optional but recommended): Enables AI‑powered quiz generation. If unset, the backend will fall back to static question generation.
 
 Create a `.env` file in `be/` if you want to override defaults, e.g.:
 ```env
 PORT=3001
 DB_PATH=D:\\data\\quiz.db
+# Required to use AI generation
+GEMINI_API_KEY=your_google_gemini_api_key
 ```
 
 ### Frontend environment variables
@@ -116,7 +122,9 @@ VITE_API_URL=http://localhost:3000/api
 - `src/utils/seedDatabase.ts`: Inserts one quiz and 5 questions.
 - `src/routes/quizrouter.ts`: API routes under `/api`.
 - `src/controllers/quizcontroller.ts`: Validates input, calls service layer.
-- `src/services/quizservice.ts`: Fetches questions and calculates scores (with optional detailed review).
+- `src/services/quizservice.ts`: Fetches questions, calculates scores (with optional detailed review), user attempts, leaderboard, and AI/static quiz generation.
+- `src/services/geminiService.ts`: Integrates with Google Gemini to generate quizzes.
+- `src/schemas/aiQuizSchema.ts`: Zod schemas for AI request/response validation.
 - `src/server.ts`: Express app with CORS, JSON body parsing, `/health` endpoint, graceful shutdown.
 
 ### API Endpoints
@@ -126,6 +134,24 @@ VITE_API_URL=http://localhost:3000/api
   - Body: `{ answers: Array<{ question_id: number, selected_option: 'A'|'B'|'C'|'D' }> }`
   - Response (details=false): `{ total_questions, correct_answers, score_percentage }`
   - Response (details=true): adds `details[]` with per‑question review.
+- `GET /api/quizzes`
+  - Query (optional): `category`, `level`
+  - Response: `{ quizzes: Array<{ id, title, description, category, level }> }`
+- `POST /api/quizzes`
+  - Body: `{ title, description?, category, level }`
+  - Response: `201 { id }`
+- `POST /api/quizzes/:quizId/questions`
+  - Body: `{ question_text, option_a, option_b, option_c, option_d, correct_option }`
+  - Response: `201 { id }`
+- `GET /api/quiz/attempts`
+  - Query: `email` (required), `quizId` (optional)
+  - Response: `{ attempts: Attempt[] }`
+- `GET /api/quiz/:quizId/leaderboard?limit=10`
+  - Response: `{ leaderboard: Array<{ rank, username, email, score_percentage, ... }> }`
+- `POST /api/ai-assessment/generate`
+  - Body: `{ topic: string, difficulty: 'easy'|'medium'|'hard', questionCount: number }`
+  - Response on success: `201 { quizId, message, generationType: 'ai'|'static' }`
+  - Notes: Uses Gemini when `GEMINI_API_KEY` is set, otherwise falls back to static question generation.
 - `GET /health`
   - Response: `{ status: 'ok', message: 'Quiz API is running' }`
 
@@ -167,6 +193,9 @@ npm test
 ```
 
 Coverage output is written to `be/coverage/`.
+
+E2E coverage:
+- The suite includes end‑to‑end tests that exercise all major API endpoints, including AI assessment generation with fallback behavior. See `be/src/tests/quiz.test.ts` and `be/src/tests/api.e2e.test.ts`.
 
 ---
 

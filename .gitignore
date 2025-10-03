@@ -30,3 +30,5 @@ Thumbs.db
 be/quiz.db
 
 
+be/coverage
+be/dist
