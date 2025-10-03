@@ -1,7 +1,7 @@
 import express from 'express';
+import cors from 'cors';
 import quizRoutes from './routes/quizrouter';
 import { closeDatabase } from './config/db';
-const cors = require('cors');
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -15,20 +15,32 @@ const PORT = process.env.PORT || 3001;
 
 console.log(`🌐 Server will run on port: ${PORT}`);
 
+// CORS Configuration - MUST be before other middleware
+const corsOptions = {
+  origin: [
+    'http://localhost:5173',
+    'http://localhost:3000',
+    'https://nebulaquiz.vercel.app', // Replace with your actual Vercel URL
+    'https://online-quiz-application-1.onrender.com'
+  ],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+  optionsSuccessStatus: 200
+};
+
+app.use(cors(corsOptions));
+
+// Handle preflight requests
+app.options('*', cors(corsOptions));
+
+app.use(express.json());
+
 // Middleware with logging
 app.use((req, res, next) => {
   console.log(`📝 ${req.method} ${req.path} - ${new Date().toISOString()}`);
   next();
 });
-
-const corsOptions = {
-  origin: '*',
-  credentials: true,
-  optionsSuccessStatus: 200
-};
-
-app.use(cors(corsOptions));
-app.use(express.json());
 
 console.log('✅ Middleware configured');
 
@@ -43,7 +55,7 @@ app.get('/health', (req, res) => {
 
 // Last-chance error handler
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
-  console.error(err.stack);
+  console.error('❌ Error:', err.stack);
   res.status(500).json({ error: 'Something went wrong!' });
 });
 
