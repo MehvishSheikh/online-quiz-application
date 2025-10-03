@@ -26,12 +26,22 @@ export const AIAssessmentPage = () => {
     'React Development',
     'TypeScript',
     'Node.js',
-    'CSS & HTML',
-    'Web APIs',
+    'Python Programming',
+    'Machine Learning',
+    'Data Science',
+    'Web Development',
+    'Mobile Development',
+    'DevOps',
+    'Cloud Computing',
+    'Cybersecurity',
+    'Database Design',
+    'System Design',
+    'UI/UX Design',
+    'Blockchain',
+    'Artificial Intelligence',
     'Data Structures',
     'Algorithms',
-    'Database Design',
-    'System Design'
+    'Software Engineering'
   ];
 
   const difficultyLevels = [
@@ -187,11 +197,11 @@ export const AIAssessmentPage = () => {
                     }`}
                   />
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    {topics.slice(0, 8).map((topic) => (
+                    {topics.slice(0, 12).map((topic) => (
                       <button
                         key={topic}
                         onClick={() => setConfig({ ...config, topic })}
-                        className={`px-4 py-3 text-sm rounded-lg border transition-colors hover:bg-primary hover:text-primary-foreground ${
+                        className={`px-4 py-3 text-sm ai-rounded-lg border transition-colors hover:bg-primary hover:text-primary-foreground ${
                           config.topic === topic
                             ? 'bg-primary text-primary-foreground border-primary'
                             : 'bg-background border-input hover:border-primary'
@@ -217,7 +227,7 @@ export const AIAssessmentPage = () => {
                     <button
                       key={level.value}
                       onClick={() => setConfig({ ...config, difficulty: level.value as 'easy' | 'medium' | 'hard' })}
-                      className={`p-6 text-center border rounded-xl transition-all hover:scale-105 ${
+                      className={`p-6 text-center border ai-rounded-xl transition-all hover:scale-105 ${
                         config.difficulty === level.value
                           ? `${level.bgColor} ${level.borderColor} ${level.color}`
                           : 'bg-card border-input hover:border-primary'
@@ -244,7 +254,7 @@ export const AIAssessmentPage = () => {
                       <button
                         key={count}
                         onClick={() => setConfig({ ...config, questionCount: count })}
-                        className={`px-4 py-3 rounded-lg border transition-colors text-center ${
+                        className={`px-4 py-3 ai-rounded-lg border transition-colors text-center ${
                           config.questionCount === count
                             ? 'bg-primary text-primary-foreground border-primary'
                             : 'bg-background border-input hover:border-primary hover:bg-primary/10'

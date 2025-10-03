@@ -10,11 +10,16 @@ export const DashboardPage = () => {
   const [category, setCategory] = useState('javascript');
   const [level, setLevel] = useState('basic');
   const [quizzes, setQuizzes] = useState<Array<{ id: number; title: string; description: string; category: string | null; level: string | null }>>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const [user, setUser] = useState<{username: string, email: string} | null>(null);
 
   useEffect(() => {
-    quizApi.listQuizzes(category, level).then(setQuizzes).catch(()=>setQuizzes([]));
+    setIsLoading(true);
+    quizApi.listQuizzes(category, level)
+      .then(setQuizzes)
+      .catch(()=>setQuizzes([]))
+      .finally(() => setIsLoading(false));
     
     // Get user info
     const stored = sessionStorage.getItem('quiz_user');
@@ -120,11 +125,11 @@ export const DashboardPage = () => {
                       <button
                         key={topic.key}
                         onClick={()=>setCategory(topic.key)}
-                        className={`p-4 rounded-xl border text-left transition-all duration-300 ${
-                          category === topic.key 
-                            ? `bg-gradient-to-br ${topic.gradient} text-white border-transparent shadow-lg` 
-                            : 'bg-gradient-to-br from-card to-card/80 hover:from-accent hover:to-accent/80 hover:scale-102 border-border shadow-sm hover:shadow-md'
-                        }`}
+                         className={`p-4 ai-rounded-xl border text-left transition-all duration-300 ${
+                           category === topic.key 
+                             ? `bg-gradient-to-br ${topic.gradient} text-white border-transparent shadow-lg` 
+                             : 'bg-gradient-to-br from-card to-card/80 hover:from-accent hover:to-accent/80 hover:scale-102 border-border shadow-sm hover:shadow-md'
+                         }`}
                       >
                         <div className="text-2xl mb-2">{topic.icon}</div>
                         <div className="font-medium">{topic.label}</div>
@@ -144,11 +149,11 @@ export const DashboardPage = () => {
                       <button
                         key={lvl.key}
                         onClick={()=>setLevel(lvl.key)}
-                        className={`p-4 rounded-xl border text-left transition-all duration-300 ${
-                          level === lvl.key 
-                            ? `bg-gradient-to-br ${lvl.gradient} text-white border-transparent shadow-lg` 
-                            : 'bg-gradient-to-br from-card to-card/80 hover:from-accent hover:to-accent/80 hover:scale-102 border-border shadow-sm hover:shadow-md'
-                        }`}
+                         className={`p-4 ai-rounded-xl border text-left transition-all duration-300 ${
+                           level === lvl.key 
+                             ? `bg-gradient-to-br ${lvl.gradient} text-white border-transparent shadow-lg` 
+                             : 'bg-gradient-to-br from-card to-card/80 hover:from-accent hover:to-accent/80 hover:scale-102 border-border shadow-sm hover:shadow-md'
+                         }`}
                       >
                         <div className="flex items-center gap-3">
                           <span className="text-xl">{lvl.icon}</span>
@@ -164,49 +169,62 @@ export const DashboardPage = () => {
                   </div>
                 </div>
 
-                {/* Available Quiz */}
-                <div className="bg-card border rounded-xl p-6 ai-card-glow">
-                  <h4 className="font-semibold mb-4">Ready to Start?</h4>
-                  {quizzes[0] ? (
-                    <div className="space-y-4">
-                      <div className="p-4 bg-muted/30 rounded-lg ai-card-glow">
-                        <h5 className="font-medium mb-1">{quizzes[0].title}</h5>
-                        <p className="text-sm text-muted-foreground mb-3">{quizzes[0].description}</p>
-                        <div className="flex items-center gap-4 text-xs text-muted-foreground">
-                          <span className="flex items-center gap-1">
-                            <BookOpen className="w-3 h-3" />
-                            Multiple Choice
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <Trophy className="w-3 h-3" />
-                            Instant Results
-                          </span>
-                        </div>
-                      </div>
-                      <Button 
-                        size="lg" 
-                        onClick={start}
-                        className="w-full ai-button-gradient text-white shadow-lg hover:shadow-xl transition-all duration-200"
-                      >
-                        <Play className="w-4 h-4 mr-2" />
-                        Start Quiz Now
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </Button>
-                    </div>
-                  ) : (
-                    <div className="text-center py-8">
-                      <BookOpen className="w-12 h-12 text-muted-foreground/50 mx-auto mb-3" />
-                      <p className="text-muted-foreground">No quiz available for this combination.</p>
-                      <p className="text-sm text-muted-foreground mt-1">Try a different topic or level.</p>
-                    </div>
-                  )}
-                </div>
+                 {/* Available Quiz */}
+                 <div className="bg-card border ai-rounded-xl p-6 ai-card-glow">
+                   <h4 className="font-semibold mb-4">Ready to Start?</h4>
+                   {isLoading ? (
+                     <div className="space-y-4">
+                       <div className="p-4 bg-muted/30 rounded-lg">
+                         <div className="ai-skeleton ai-skeleton-title w-3/4"></div>
+                         <div className="ai-skeleton ai-skeleton-text w-full"></div>
+                         <div className="ai-skeleton ai-skeleton-text w-2/3"></div>
+                         <div className="flex items-center gap-4 mt-3">
+                           <div className="ai-skeleton ai-skeleton-text w-20"></div>
+                           <div className="ai-skeleton ai-skeleton-text w-24"></div>
+                         </div>
+                       </div>
+                       <div className="ai-skeleton ai-skeleton-button w-full"></div>
+                     </div>
+                   ) : quizzes[0] ? (
+                     <div className="space-y-4">
+                       <div className="p-4 bg-muted/30 ai-rounded-lg ai-card-glow">
+                         <h5 className="font-medium mb-1">{quizzes[0].title}</h5>
+                         <p className="text-sm text-muted-foreground mb-3">{quizzes[0].description}</p>
+                         <div className="flex items-center gap-4 text-xs text-muted-foreground">
+                           <span className="flex items-center gap-1">
+                             <BookOpen className="w-3 h-3" />
+                             Multiple Choice
+                           </span>
+                           <span className="flex items-center gap-1">
+                             <Trophy className="w-3 h-3" />
+                             Instant Results
+                           </span>
+                         </div>
+                       </div>
+                       <Button 
+                         size="lg" 
+                         onClick={start}
+                         className="w-full ai-button-gradient text-white shadow-lg hover:shadow-xl transition-all duration-200"
+                       >
+                         <Play className="w-4 h-4 mr-2" />
+                         Start Quiz Now
+                         <ArrowRight className="w-4 h-4 ml-2" />
+                       </Button>
+                     </div>
+                   ) : (
+                     <div className="text-center py-8">
+                       <BookOpen className="w-12 h-12 text-muted-foreground/50 mx-auto mb-3" />
+                       <p className="text-muted-foreground">No quiz available for this combination.</p>
+                       <p className="text-sm text-muted-foreground mt-1">Try a different topic or level.</p>
+                     </div>
+                   )}
+                 </div>
               </div>
             </div>
 
             {/* Sidebar */}
             <div className="space-y-6">
-              <div className="bg-card border rounded-xl p-6 ai-card-glow">
+               <div className="bg-card border ai-rounded-xl p-6 ai-card-glow">
                 <h4 className="font-semibold mb-4">Quick Actions</h4>
                 <div className="space-y-3">
                   <Button 

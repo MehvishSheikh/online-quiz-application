@@ -51,10 +51,10 @@ export const HomePage = () => {
             <Zap className="w-4 h-4 text-primary" />
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-3">
-            Master <span className="ai-text-gradient">Frontend Development</span> with AI
+            Master <span className="ai-text-gradient">Any Technology</span> with AI
           </h1>
           <p className="text-lg lg:text-xl text-muted-foreground mb-6 max-w-3xl mx-auto">
-            Experience the future of learning with AI-generated quizzes, personalized assessments, and intelligent feedback on JavaScript, TypeScript, React, and Next.js
+            Experience the future of learning with AI-generated quizzes, personalized assessments, and intelligent feedback on any topic you choose
           </p>
         </div>
 
@@ -62,7 +62,7 @@ export const HomePage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 px-4 lg:px-6 pb-8">
           {/* Get Started Card */}
           <div className="order-2 lg:order-1">
-            <div className="bg-card border rounded-2xl p-6 lg:p-8 shadow-sm h-full ai-card-glow">
+            <div className="bg-card border ai-rounded-2xl p-6 lg:p-8 shadow-sm h-full ai-card-glow">
               <div className="text-center mb-6">
                 <div className="flex items-center justify-center gap-2 mb-4">
                   <Bot className="w-6 h-6 text-primary ai-float" />
@@ -114,38 +114,38 @@ export const HomePage = () => {
 
           {/* Features */}
           <div className="order-1 lg:order-2">
-            <div className="mb-6">
-              <h2 className="text-xl lg:text-2xl font-bold mb-2 ai-text-gradient">Why Choose QuizNova AI?</h2>
-              <p className="text-muted-foreground">Everything you need to master frontend development with AI</p>
-            </div>
+             <div className="mb-6">
+               <h2 className="text-xl lg:text-2xl font-bold mb-2 ai-text-gradient">Why Choose QuizNova AI?</h2>
+               <p className="text-muted-foreground">Everything you need to master any technology with AI</p>
+             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div className="bg-card border rounded-xl p-4 ai-card-glow hover:scale-105 transition-transform">
-                <div className="w-10 h-10 ai-button-gradient rounded-lg flex items-center justify-center mb-3">
+              <div className="bg-card border ai-rounded-xl p-4 ai-card-glow hover:scale-105 transition-transform">
+                <div className="w-10 h-10 ai-button-gradient ai-rounded-lg flex items-center justify-center mb-3">
                   <Brain className="w-5 h-5 text-white" />
                 </div>
                 <h3 className="font-semibold mb-2">AI-Generated Quizzes</h3>
                 <p className="text-sm text-muted-foreground">Personalized questions created by advanced AI</p>
               </div>
               
-              <div className="bg-card border rounded-xl p-4 ai-card-glow hover:scale-105 transition-transform">
-                <div className="w-10 h-10 ai-button-gradient rounded-lg flex items-center justify-center mb-3">
+              <div className="bg-card border ai-rounded-xl p-4 ai-card-glow hover:scale-105 transition-transform">
+                <div className="w-10 h-10 ai-button-gradient ai-rounded-lg flex items-center justify-center mb-3">
                   <Zap className="w-5 h-5 text-white" />
                 </div>
                 <h3 className="font-semibold mb-2">Smart Assessment</h3>
                 <p className="text-sm text-muted-foreground">AI adapts difficulty based on your performance</p>
               </div>
               
-              <div className="bg-card border rounded-xl p-4 ai-card-glow hover:scale-105 transition-transform">
-                <div className="w-10 h-10 ai-button-gradient rounded-lg flex items-center justify-center mb-3">
+              <div className="bg-card border ai-rounded-xl p-4 ai-card-glow hover:scale-105 transition-transform">
+                <div className="w-10 h-10 ai-button-gradient ai-rounded-lg flex items-center justify-center mb-3">
                   <Cpu className="w-5 h-5 text-white" />
                 </div>
                 <h3 className="font-semibold mb-2">Intelligent Feedback</h3>
                 <p className="text-sm text-muted-foreground">AI-powered explanations and learning paths</p>
               </div>
               
-              <div className="bg-card border rounded-xl p-4 ai-card-glow hover:scale-105 transition-transform">
-                <div className="w-10 h-10 ai-button-gradient rounded-lg flex items-center justify-center mb-3">
+              <div className="bg-card border ai-rounded-xl p-4 ai-card-glow hover:scale-105 transition-transform">
+                <div className="w-10 h-10 ai-button-gradient ai-rounded-lg flex items-center justify-center mb-3">
                   <Bot className="w-5 h-5 text-white" />
                 </div>
                 <h3 className="font-semibold mb-2">Adaptive Learning</h3>
