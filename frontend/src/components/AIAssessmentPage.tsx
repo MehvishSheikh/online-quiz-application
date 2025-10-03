@@ -2,8 +2,7 @@ import { useEffect, useState, type ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { ArrowLeft, Brain, Clock, Target, Sparkles, Zap, Send, Loader2, Search, CheckCircle2, Database, ArrowRight } from 'lucide-react';
-import { ThemeToggle } from '@/components/theme-toggle';
+import { Brain, Clock, Target, Sparkles, Zap, Send, Loader2, Search, CheckCircle2, Database, ArrowRight } from 'lucide-react';
 import { AIPageShell } from '@/components/AISidebar';
 
 interface AssessmentConfig {
@@ -184,7 +183,7 @@ export const AIAssessmentPage = () => {
       <div className="p-6">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 sm:mb-8 gap-3 sm:gap-0">
-          <div className="flex items-center gap-3 sm:gap-4">
+          {/* <div className="flex items-center gap-3 sm:gap-4">
             <Button 
               variant="ghost" 
               size="sm"
@@ -202,8 +201,8 @@ export const AIAssessmentPage = () => {
                 AI Assessment
               </span>
             </div>
-          </div>
-          <ThemeToggle />
+          </div> */}
+         
         </div>
 
         {/* Main Content */}
