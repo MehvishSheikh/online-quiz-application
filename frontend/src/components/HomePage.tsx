@@ -39,11 +39,20 @@ export const HomePage = () => {
         <div className="nebula-stars-3"></div>
       </div>
       <div className="max-w-7xl mx-auto relative">
+        {/* Subtle top-center watermark */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none select-none absolute left-1/2 -translate-x-1/2 top-6 z-10"
+        >
+          <span className="text-transparent bg-clip-text bg-gradient-to-r from-white/20 via-white/10 to-white/20 opacity-20 text-3xl md:text-2xl font-extrabold tracking-wide">
+           Creator Mehvish
+          </span>
+        </div>
         {/* Header */}
         <div className="flex justify-between items-center p-4 lg:p-6">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg ai-button-gradient flex items-center justify-center shadow-lg ai-pulse">
-              <Brain className="w-5 h-5 text-white" />
+            <Sparkles className="w-5 h-5 text-white" />
             </div>
             <span className="text-xl font-bold ai-text-gradient">Nebula AI Quiz</span>
           </div>
@@ -53,7 +62,7 @@ export const HomePage = () => {
         {/* Hero Section */}
         <div className="text-center py-8 px-4 lg:px-6">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border bg-gradient-to-r from-primary/20 to-primary/10 backdrop-blur-sm mb-4 ai-card-glow">
-            <Brain className="w-4 h-4 text-primary ai-pulse" />
+            {/* <Brain className="w-4 h-4 text-primary ai-pulse" /> */}
             <Sparkles className="w-4 h-4 text-primary" />
             <span className="text-sm font-medium">AI-Powered Learning</span>
             <Zap className="w-4 h-4 text-primary" />
