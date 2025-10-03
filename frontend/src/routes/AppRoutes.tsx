@@ -7,7 +7,7 @@ import { HomePage } from '@/components/HomePage';
 import { DashboardPage } from '@/components/DashboardPage';
 import { AIAssessmentPage } from '@/components/AIAssessmentPage';
 import React from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 
 
 const AppRoutes: React.FC = () => {
