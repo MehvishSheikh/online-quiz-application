@@ -9,7 +9,6 @@ export const AdminCreateQuiz = () => {
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('javascript');
   const [level, setLevel] = useState('basic');
-  const [quizId, setQuizId] = useState<number | null>(null);
   const [msg, setMsg] = useState<string | null>(null);
 
   const [question, setQuestion] = useState({
@@ -21,7 +20,6 @@ export const AdminCreateQuiz = () => {
   const createQuiz = async () => {
     if (!title.trim()) { setMsg('Please provide a title'); return; }
     const res = await quizApi.createQuiz({ title, description, category, level });
-    setQuizId(res.id);
     setMsg('Quiz created. Adding questions...');
     // add all prepared questions
     for (const q of questionList) {

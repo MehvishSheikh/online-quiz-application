@@ -1,7 +1,6 @@
 // ==================== src/pages/ResultsPage.tsx ====================
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { quizApi } from '@/services/api/api.service';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { type QuizResult } from '@/types/quiz.types';
 import { Trophy, CheckCircle2, XCircle, Home } from 'lucide-react';

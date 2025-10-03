@@ -2,9 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { quizApi } from '@/services/api/api.service';
-import { ThemeToggle } from '@/components/theme-toggle';
 import { AIPageShell } from '@/components/AISidebar';
-import { BookOpen, Trophy, History, Plus, Play, User, ArrowRight, Brain, Sparkles } from 'lucide-react';
+import { BookOpen, Play, User, ArrowRight, Brain, Sparkles, Trophy } from 'lucide-react';
 
 export const DashboardPage = () => {
   const navigate = useNavigate();

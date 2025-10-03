@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { Brain, LayoutDashboard, History as HistoryIcon, PlusSquare, Home, Sparkles, Trophy, Settings, ChevronsLeft, ChevronsRight, LogOut } from 'lucide-react';
+import { Brain, LayoutDashboard, History as HistoryIcon, PlusSquare, Sparkles, Trophy, Settings, ChevronsLeft, ChevronsRight, LogOut } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 // NOTE: Home is not used in the primary items anymore; kept import if needed elsewhere
 
@@ -23,7 +23,7 @@ const SECONDARY_ITEMS: NavItem[] = [
   { label: 'Settings', path: '/settings', icon: Settings },
 ];
 
-export function AISidebar({ collapsed, setCollapsed }: { collapsed: boolean; setCollapsed: (v: boolean)=>void }) {
+export function AISidebar({ collapsed }: { collapsed: boolean }) {
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -56,7 +56,7 @@ export function AISidebar({ collapsed, setCollapsed }: { collapsed: boolean; set
       <div className="mx-3 my-2 border-t border-white/40 dark:border-white/10" />
 
        <nav className="px-2 space-y-1 py-4">
-        {PRIMARY_ITEMS.map((item, idx) => {
+        {PRIMARY_ITEMS.map((item) => {
           const active = isActive(item.path);
           const Icon = item.icon;
           return (
@@ -139,7 +139,7 @@ export function AIPageShell({ children, title }: { children: React.ReactNode; ti
 
   return (
     <div className="min-h-screen ai-gradient-bg text-foreground">
-      <AISidebar collapsed={collapsed} setCollapsed={setCollapsed} />
+      <AISidebar collapsed={collapsed} />
        <header className="sticky top-0 z-30" style={{ marginLeft: ml }}>
         <div className="px-4 md:px-6 py-3 flex items-center justify-between bg-card/40 backdrop-blur border-b ai-card-glow">
           <div className="flex items-center gap-3">

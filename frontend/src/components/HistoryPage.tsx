@@ -4,7 +4,6 @@ import { quizApi } from '@/services/api/api.service';
 import { type AttemptRecord } from '@/types/quiz.types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ThemeToggle } from '@/components/theme-toggle';
 import { AIPageShell } from '@/components/AISidebar';
 
 export const HistoryPage = () => {

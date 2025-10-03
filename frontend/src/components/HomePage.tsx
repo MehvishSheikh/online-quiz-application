@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { BookOpen, Clock, Trophy, Sparkles, ShieldCheck, Brain, Zap, Cpu, Bot } from 'lucide-react';
+import { Sparkles, Brain, Zap, Cpu, Bot } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
 // Home page intentionally does not use AIPageShell per request
 
@@ -48,6 +48,7 @@ export const HomePage = () => {
         <div className="text-center py-8 px-4 lg:px-6">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border bg-gradient-to-r from-primary/20 to-primary/10 backdrop-blur-sm mb-4 ai-card-glow">
             <Brain className="w-4 h-4 text-primary ai-pulse" />
+            <Sparkles className="w-4 h-4 text-primary" />
             <span className="text-sm font-medium">AI-Powered Learning</span>
             <Zap className="w-4 h-4 text-primary" />
           </div>
