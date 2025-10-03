@@ -28,9 +28,8 @@ const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
     optionsSuccessStatus: 200
 };
+// Apply CORS globally
 app.use((0, cors_1.default)(corsOptions));
-// Handle preflight requests
-app.options('*', (0, cors_1.default)(corsOptions));
 app.use(express_1.default.json());
 // Middleware with logging
 app.use((req, res, next) => {

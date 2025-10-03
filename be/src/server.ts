@@ -29,10 +29,8 @@ const corsOptions = {
   optionsSuccessStatus: 200
 };
 
+// Apply CORS globally
 app.use(cors(corsOptions));
-
-// Handle preflight requests
-app.options('*', cors(corsOptions));
 
 app.use(express.json());
 
