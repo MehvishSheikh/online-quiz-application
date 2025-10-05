@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { quizApi } from '@/services/api/api.service';
-import { AIPageShell } from '@/components/AISidebar';
+import { AIPageShell } from '@/components/Dashboard/Sidebar/AISidebar';
 import { BookOpen, Play, User, ArrowRight, Brain, Sparkles, Trophy } from 'lucide-react';
 
 export const DashboardPage = () => {

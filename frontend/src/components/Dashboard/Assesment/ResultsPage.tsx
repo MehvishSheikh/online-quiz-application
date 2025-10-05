@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { type QuizResult } from '@/types/quiz.types';
 import { Trophy, CheckCircle2, XCircle, Home } from 'lucide-react';
 import { Progress } from '@/components/ui/progress';
-import { ThemeToggle } from '@/components/theme-toggle';
+import { ThemeToggle } from '@/components/Theme/theme-toggle';
 
 export const ResultsPage = () => {
   const location = useLocation();

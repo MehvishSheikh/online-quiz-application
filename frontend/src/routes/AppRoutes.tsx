@@ -1,11 +1,11 @@
-import { QuizPage } from '@/components/QuizPage';
-import { ResultsPage } from '@/components/ResultsPage';
-import { HistoryPage } from '@/components/HistoryPage';
-import { LeaderboardPage } from '@/components/LeaderboardPage';
-import { AdminCreateQuiz } from '@/components/AdminCreateQuiz';
-import { HomePage } from '@/components/HomePage';
-import { DashboardPage } from '@/components/DashboardPage';
-import { AIAssessmentPage } from '@/components/AIAssessmentPage';
+import { QuizPage } from '@/components/Dashboard/Assesment/QuizPage';
+import { ResultsPage } from '@/components/Dashboard/Assesment/ResultsPage';
+import { HistoryPage } from '@/components/Dashboard/History/HistoryPage';
+import { LeaderboardPage } from '@/components/Dashboard/LeaderBoard/LeaderboardPage';
+import { AdminCreateQuiz } from '@/components/Dashboard/CreateQuiz/AdminCreateQuiz';
+import { HomePage } from '@/components/LandingPage/HomePage';
+import { DashboardPage } from '@/components/Dashboard/DashboardPage';
+import { AIAssessmentPage } from '@/components/Dashboard/Assesment/AIAssessmentPage';
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 

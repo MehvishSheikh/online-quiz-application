@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Sparkles, Brain, Zap, Cpu, Bot } from 'lucide-react';
-import { ThemeToggle } from '@/components/theme-toggle';
-import { Footer } from '@/components/Footer';
+import { ThemeToggle } from '@/components/Theme/theme-toggle';
+import { Footer } from '@/components/Footer/Footer';
 // Home page intentionally does not use AIPageShell per request
 
 export const HomePage = () => {

@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { quizApi } from '@/services/api/api.service';
 import { Button } from '@/components/ui/button';
-import { ThemeToggle } from '@/components/theme-toggle';
-import { AIPageShell } from '@/components/AISidebar';
+import { ThemeToggle } from '@/components/Theme/theme-toggle';
+import { AIPageShell } from '@/components/Dashboard/Sidebar/AISidebar';
 
 export const LeaderboardPage = () => {
   const { id } = useParams();

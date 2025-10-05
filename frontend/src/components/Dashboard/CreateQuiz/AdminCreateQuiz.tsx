@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { quizApi } from '@/services/api/api.service';
 import { Button } from '@/components/ui/button';
-import { ThemeToggle } from '@/components/theme-toggle';
-import { AIPageShell } from '@/components/AISidebar';
+import { ThemeToggle } from '@/components/Theme/theme-toggle';
+import { AIPageShell } from '@/components/Dashboard/Sidebar/AISidebar';
 
 export const AdminCreateQuiz = () => {
   const [title, setTitle] = useState('');

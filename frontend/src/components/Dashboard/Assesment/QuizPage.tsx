@@ -1,14 +1,14 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
-import { QuestionCard } from '@/components/QuestionsCards'; 
-import { Timer } from '@/components/QuizTimer';
-import { ProgressBar } from '@/components/ProgressBar';
+import { QuestionCard } from '@/components/Dashboard/Assesment/QuestionsCards'; 
+import { Timer } from '@/components/Dashboard/Assesment/QuizTimer';
+import { ProgressBar } from '@/components/Dashboard/Assesment/ProgressBar';
 import { useTimer } from '@/hooks/useTimer';
 import { quizApi } from '@/services/api/api.service'
 import { type Question, type Answer, type UserInfo } from '@/types/quiz.types';
 import { ChevronLeft, ChevronRight, Send, Loader2, BookOpen, Trophy, Home, AlertTriangle } from 'lucide-react';
-import { ThemeToggle } from '@/components/theme-toggle';
+import { ThemeToggle } from '@/components/Theme/theme-toggle';
 
 export const QuizPage = () => {
   const navigate = useNavigate();

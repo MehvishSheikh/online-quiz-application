@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Brain, Clock, Target, Sparkles, Zap, Send, Loader2, Search, CheckCircle2, Database, ArrowRight } from 'lucide-react';
-import { AIPageShell } from '@/components/AISidebar';
+import { AIPageShell } from '@/components/Dashboard/Sidebar/AISidebar';
 
 interface AssessmentConfig {
   topic: string;

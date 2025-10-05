@@ -2,8 +2,8 @@ import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Brain, LayoutDashboard, History as HistoryIcon, PlusSquare, Sparkles, Trophy, Settings, ChevronsLeft, ChevronsRight, LogOut } from 'lucide-react';
-import { ThemeToggle } from '@/components/theme-toggle';
-import { Footer } from '@/components/Footer';
+import { ThemeToggle } from '@/components/Theme/theme-toggle';
+import { Footer } from '@/components/Footer/Footer';
 // NOTE: Home is not used in the primary items anymore; kept import if needed elsewhere
 
 type NavItem = {
