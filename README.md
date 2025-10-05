@@ -164,12 +164,31 @@ VITE_API_URL=http://localhost:3000/api
 
 ---
 
+
 ## Frontend Overview
 
-- Entry: `frontend/src/main.tsx`, app shell in `frontend/src/App.tsx`.
-- Routing: `frontend/src/routes/AppRoutes.tsx` with routes `/start`, `/quiz`, `/results`.
-- API client: `frontend/src/services/api/api.service.ts` uses `VITE_API_URL` to call backend.
-- Components: Quiz flow (`StartPage`, `QuizPage`, `ResultsPage`), timer, progress bar, and UI primitives.
+- **Entry:** `frontend/src/main.tsx`, with the main app shell in `frontend/src/App.tsx`.  
+- **Routing:** Defined in `frontend/src/routes/AppRoutes.tsx`, including the following routes:  
+  - `/home` → **HomePage**  
+  - `/dashboard` → **DashboardPage**  
+  - `/ai-assessment` → **AIAssessmentPage**  
+  - `/quiz/:id` → **QuizPage**  
+  - `/results` → **ResultsPage**  
+  - `/history` → **HistoryPage**  
+  - `/leaderboard` → **LeaderboardPage**  
+  - `/leaderboard/:id` → **LeaderboardPage** (for quiz-specific leaderboards)  
+  - `/admin/create` → **AdminCreateQuiz**  
+
+- **API Client:** `frontend/src/services/api/api.service.ts` uses the `VITE_API_URL` environment variable to communicate with the backend.  
+
+- **Components:** Cover quiz interaction and user experience, including:  
+  - **Home** and **Dashboard** pages for navigation and user progress overview.  
+  - **AI Assessment** for AI-driven quiz recommendations or evaluations.  
+  - **Quiz Flow** (`QuizPage`, `ResultsPage`) with timer, progress tracking, and question rendering.  
+  - **Leaderboard** and **History** pages for performance tracking.  
+  - **Admin Panel** (`AdminCreateQuiz`) for creating and managing quizzes.
+
+
 
 ### Scripts (frontend)
 - `npm run dev`: Start Vite dev server.
