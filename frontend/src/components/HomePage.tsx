@@ -56,7 +56,7 @@ export const HomePage = () => {
               <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-lg ai-button-gradient flex items-center justify-center shadow-lg ai-pulse">
                 <Sparkles className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
               </div>
-              <span className="text-lg sm:text-xl font-bold ai-text-gradient">Nebula AI Quiz</span>
+              <span className="text-lg sm:text-xl font-bold ai-text-gradient">Nebula Quiz</span>
             </div>
             <ThemeToggle />
           </div>
@@ -70,7 +70,7 @@ export const HomePage = () => {
               <Zap className="w-3 h-3 sm:w-4 sm:h-4 text-primary" />
             </div>
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-3 leading-tight">
-              Explore the <span className="ai-text-gradient">Nebula of Knowledge</span> with AI
+              Explore the <span className="ai-text-gradient">Nebula of Knowledge</span>
             </h1>
             <p className="text-sm sm:text-base md:text-lg lg:text-xl text-muted-foreground mb-6 max-w-3xl mx-auto leading-relaxed">
               Experience the future of learning with AI-generated quizzes, personalized assessments, and intelligent feedback on any topic you choose
@@ -88,7 +88,7 @@ export const HomePage = () => {
                     <h2 className="text-lg sm:text-xl lg:text-2xl font-bold">Ready for AI Learning?</h2>
                     <Cpu className="w-5 h-5 sm:w-6 sm:h-6 text-primary ai-float" />
                   </div>
-                  <p className="text-sm sm:text-base text-muted-foreground">Enter your details to begin your AI-powered learning journey</p>
+                  <p className="text-sm sm:text-base text-muted-foreground">Enter your details to begin your learning journey</p>
                 </div>
 
                 <div className="space-y-3 sm:space-y-4">
@@ -124,7 +124,7 @@ export const HomePage = () => {
                     size="lg"
                     onClick={proceed}
                   >
-                    Start AI Learning
+                    Start Learning
                     <Brain className="w-4 h-4 sm:w-5 sm:h-5 ml-2" />
                   </Button>
                 </div>
@@ -134,7 +134,7 @@ export const HomePage = () => {
             {/* Features */}
             <div className="order-1 lg:order-2">
               <div className="mb-4 sm:mb-6">
-                <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 ai-text-gradient">Why Choose Nebula AI?</h2>
+                <h2 className="text-lg sm:text-xl lg:text-2xl font-bold mb-2 ai-text-gradient">Why Choose Nebula Quiz?</h2>
                 <p className="text-sm sm:text-base text-muted-foreground">Everything you need to master any technology with AI</p>
               </div>
 
