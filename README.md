@@ -7,7 +7,8 @@ A full‑stack quiz application with a Node.js/Express + SQLite backend and a Re
 - **Backend**: Node.js, Express, SQLite3, TypeScript, Jest (tests)
 - **AI**: Google Gemini for AI‑generated assessments (with static fallback)
 
-<img width="948" height="753" alt="image" src="https://github.com/user-attachments/assets/e53b6737-536a-436d-a677-bc639fc14773" />
+<img width="940" height="760" alt="image" src="https://github.com/user-attachments/assets/16c30fd9-641c-4af4-ae1c-2b8f92e3c14c" />
+
 
 ### Repository Structure
 ```
